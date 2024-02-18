@@ -17,6 +17,14 @@
     </ItemGroup>
     
     <ItemGroup>
-      <Folder Include="Resources\" />
+      <ApplicationDefinition Include="View\App.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+      </ApplicationDefinition>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="Model\" />
+      <Folder Include="ViewModel\" />
     </ItemGroup>
 </Project>
