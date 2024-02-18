@@ -1,10 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+    
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
         <TargetFramework>net6.0-windows</TargetFramework>
         <Nullable>enable</Nullable>
         <UseWPF>true</UseWPF>
     </PropertyGroup>
-
+    
+    <ItemGroup>
+        <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
+        <PackageReference Include="Material.Icons" Version="2.1.6" />
+        <PackageReference Include="MaterialDesignExtensions" Version="4.0.0-a02" />
+        <PackageReference Include="MaterialDesignThemes" Version="4.9.0" />
+        <PackageReference Include="MaterialDesignColors" Version="2.1.4" />
+        <PackageReference Include="MaterialDesignThemes.MahApps" Version="0.3.0" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="Resources\" />
+    </ItemGroup>
 </Project>
