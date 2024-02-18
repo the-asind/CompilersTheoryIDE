@@ -127,7 +127,7 @@
                 <TabItem Header="Окно вывода">
                     <TextBox Name="OutputText" Padding="3"
                              Text="IDE Orangutan was launched successfully"
-                             AcceptsReturn="True"
+                             AcceptsReturn="True" FontSize="{Binding FontSize, ElementName=TextEditor, Mode=OneWay}"
                              VerticalScrollBarVisibility="Auto"
                              HorizontalScrollBarVisibility="Auto"
                              IsReadOnly="True" />
