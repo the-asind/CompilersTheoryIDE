@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompilersTheoryIDE", "CompilersTheoryIDE\CompilersTheoryIDE.csproj", "{E773E290-A19D-4235-85D9-48D8F49A394A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E773E290-A19D-4235-85D9-48D8F49A394A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E773E290-A19D-4235-85D9-48D8F49A394A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E773E290-A19D-4235-85D9-48D8F49A394A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E773E290-A19D-4235-85D9-48D8F49A394A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
