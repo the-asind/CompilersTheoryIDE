@@ -9,9 +9,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+        xmlns:system="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d"
         AllowDrop="True"
-        Title="Orangutan IDE" Height="600" Width="900" MinWidth="300" MinHeight="300">
+        Title="Orangutan IDE" Height="600" Width="900" MinWidth="550" MinHeight="500">
     <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Файл">
@@ -105,21 +106,45 @@
                 <RowDefinition Height="4"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <avalonEdit:TextEditor FontSize="{Binding MainFontSize}"
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="35" />
+                </Grid.RowDefinitions>
+                <avalonEdit:TextEditor
                                        ShowLineNumbers="True"
                                        xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
                                        Name="TextEditor"
                                        SyntaxHighlighting="Python"
                                        FontFamily="Consolas" />
+                <DockPanel Grid.Row="1" VerticalAlignment="Bottom" Height="35">
+                    <Label Content="{Binding CurrentFilePath}" MinWidth="90" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+                </DockPanel>
             </Grid>
 
             <GridSplitter Grid.Row="1" Height="4" HorizontalAlignment="Stretch"/>
-            <Grid Grid.Row="2">
-                <TextBox FontSize="{Binding FontSize, ElementName=TextEditor, Mode=OneWay}" Name="OutputText"
-                         Text="Output"  AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
-                         HorizontalScrollBarVisibility="Auto" IsReadOnly="True" />
-            </Grid>
+            <TabControl Grid.Row="2">
+                <TabItem Header="Окно вывода">
+                    <TextBox Name="OutputText" Padding="3"
+                             Text="IDE Orangutan was launched successfully"
+                             AcceptsReturn="True"
+                             VerticalScrollBarVisibility="Auto"
+                             HorizontalScrollBarVisibility="Auto"
+                             IsReadOnly="True" />
+                </TabItem>
+                <TabItem Header="Ошибки">
+                    <DataGrid Name="ErrorsDataGrid"
+                              AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="N" Binding="{Binding Id}" />
+                            <DataGridTextColumn Header="File Path" Binding="{Binding FilePath}" />
+                            <DataGridTextColumn Header="Line" Binding="{Binding Line}" />
+                            <DataGridTextColumn Header="Column" Binding="{Binding Column}" />
+                            <DataGridTextColumn Header="Message" Binding="{Binding Message}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+            </TabControl>
         </Grid>
     </DockPanel>
 </Window>

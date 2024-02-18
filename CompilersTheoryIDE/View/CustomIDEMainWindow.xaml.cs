@@ -1,20 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Runtime.CompilerServices;
 using Microsoft.Win32;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace CompilersTheoryIDE;
 
-public partial class CustomIDEMainWindow : Window
+public partial class CustomIDEMainWindow : INotifyPropertyChanged
 {
-    private string _currentFilePath;
     private bool _isTextChanged;
 
     public CustomIDEMainWindow()
     {
         InitializeComponent();
+        CreateMockupErrors();
         Drop += MainWindow_Drop;
         DataContext = this;
         TextEditor.TextChanged += (sender, e) => _isTextChanged = true;
@@ -24,21 +26,35 @@ public partial class CustomIDEMainWindow : Window
     private void MainWindow_Drop(object sender, DragEventArgs e)
     {
         if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return;
-        // Получаем пути к файлам, которые были перетащены в окно
         var files = (string[])e.Data.GetData(DataFormats.FileDrop);
-        // Обрабатывайте каждый файл. В данном случае, мы просто берем первый файл.
-        if (files.Length > 0)
+        if (files.Length <= 0) return;
+        var filePath = files[0];
+        if (Path.GetExtension(filePath).Equals(".orangutan", StringComparison.InvariantCultureIgnoreCase))
         {
-            var filePath = files[0];
-            // Тут можно добавить проверку на расширение файла, если нужно.
-            // Например, обрабатываем только .orangutan файлы
-            if (Path.GetExtension(filePath).Equals(".orangutan", StringComparison.InvariantCultureIgnoreCase))
-            {
-                if (SaveFileCheckIsInterrupted()) return;
-                // Здесь код для открытия и дальнейшей обработки файла
-                OpenAndProcessFile(filePath);
-            }
+            if (SaveFileCheckIsInterrupted()) return;
+            OpenAndProcessFile(filePath);
         }
+    }
+    
+    public class Error
+    {
+        public int Id { get; set; }
+        public string FilePath { get; set; }
+        public int Line { get; set; }
+        public int Column { get; set; }
+        public string Message { get; set; }
+    }
+    private void CreateMockupErrors()
+    {
+        // Создать тестовые данные
+        var errors = new List<Error>
+        {
+            new Error { Id = 1, FilePath = "MainWindow.xaml", Line = 12, Column = 15, Message = "The property 'Text' is set more than once." },
+            new Error { Id = 2, FilePath = "MainWindow.xaml.cs", Line = 17, Column = 21, Message = "The name 'button1' does not exist in the current context." }
+        };
+
+        // Привязать тестовые данные к DataGrid
+        ErrorsDataGrid.ItemsSource = errors;
     }
 
     private bool SaveFileCheckIsInterrupted()
@@ -61,7 +77,7 @@ public partial class CustomIDEMainWindow : Window
     {
         TextEditor.Load(filePath);
         _isTextChanged = false; // Reset flag as we just loaded a new file
-        _currentFilePath = filePath;
+        CurrentFilePath = filePath;
     }
 
     private int CheckIfTextWasChanged()
@@ -205,4 +221,21 @@ public partial class CustomIDEMainWindow : Window
         //TODO: Заменить на словарь
         MessageBox.Show("Orangutan IDE. Версия: 18.02.2024. Все права защищены.", "О программе");
     }
+}
+
+public partial class CustomIDEMainWindow : Window, INotifyPropertyChanged
+{
+    private string _currentFilePath = "Новый документ";
+    public string CurrentFilePath
+    {
+        get => _currentFilePath;
+        set
+        {
+            _currentFilePath = value;
+            OnPropertyChanged("CurrentFilePath");
+        }
+    }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+    protected void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 }
