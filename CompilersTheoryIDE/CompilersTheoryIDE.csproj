@@ -6,6 +6,7 @@
         <Nullable>enable</Nullable>
         <UseWPF>true</UseWPF>
         <ApplicationIcon>Media\orangutan.ico</ApplicationIcon>
+        <NeutralLanguage>en-US</NeutralLanguage>
     </PropertyGroup>
     
     <ItemGroup>
@@ -26,6 +27,5 @@
     
     <ItemGroup>
       <Folder Include="Model\" />
-      <Folder Include="ViewModel\" />
     </ItemGroup>
 </Project>

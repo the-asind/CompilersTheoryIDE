@@ -15,86 +15,89 @@
         Title="Orangutan IDE" Height="600" Width="900" MinWidth="550" MinHeight="500">
     <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
-            <MenuItem Header="Файл">
-                <MenuItem Header="Создать" Click="CreateNewFile_Click"/>
-                <MenuItem Header="Открыть" Click="OpenFile_Click"/>
-                <MenuItem Header="Сохранить" Click="SaveFile_Click"/>
-                <MenuItem Header="Сохранить как" Click="SaveAs_Click"/>
-                <MenuItem Header="Выход" Click="Exit_Click"/>
+            <MenuItem Header="{DynamicResource m_File}">
+                <MenuItem Header="{DynamicResource m_Create}" Click="CreateNewFile_Click"/>
+                <MenuItem Header="{DynamicResource m_Open}" Click="OpenFile_Click"/>
+                <MenuItem Header="{DynamicResource m_Save}" Click="SaveFile_Click"/>
+                <MenuItem Header="{DynamicResource m_SaveAs}" Click="SaveAs_Click"/>
+                <MenuItem Header="{DynamicResource m_Exit}" Click="Exit_Click"/>
             </MenuItem>
-            <MenuItem Header="Правка">
-                <MenuItem Header="Отменить" Click="UndoText_Click"/>
-                <MenuItem Header="Повторить" Click="RedoText_Click"/>
-                <MenuItem Header="Вырезать" Click="CutText_Click"/>
-                <MenuItem Header="Копировать" Click="CopySelectedText_Click"/>
-                <MenuItem Header="Вставить" Click="PasteText_Click"/>
-                <MenuItem Header="Удалить" Click="DeleteText_Click"/>
-                <MenuItem Header="Выделить все" Click="SelectAllText_Click"/>
+            <MenuItem Header="{DynamicResource m_Edit}">
+                <MenuItem Header="{DynamicResource m_Undo}" Click="UndoText_Click"/>
+                <MenuItem Header="{DynamicResource m_Redo}" Click="RedoText_Click"/>
+                <MenuItem Header="{DynamicResource m_Cut}" Click="CutText_Click"/>
+                <MenuItem Header="{DynamicResource m_Copy}" Click="CopySelectedText_Click"/>
+                <MenuItem Header="{DynamicResource m_Paste}" Click="PasteText_Click"/>
+                <MenuItem Header="{DynamicResource m_Delete}" Click="DeleteText_Click"/>
+                <MenuItem Header="{DynamicResource m_SelectAll}" Click="SelectAllText_Click"/>
             </MenuItem>
-            <MenuItem Header="Текст">
-                <MenuItem Header="Постановка задачи"/>
-                <MenuItem Header="Грамматика"/>
-                <MenuItem Header="Классификация грамматики"/>
-                <MenuItem Header="Метод анализа"/>
-                <MenuItem Header="Диагностика и нейтрализация ошибок"/>
-                <MenuItem Header="Тестовый пример"/>
-                <MenuItem Header="Список литературы"/>
-                <MenuItem Header="Исходный код программы"/>
-                <MenuItem Header="Изменить размер текста ввода">
+            <MenuItem Header="{DynamicResource m_Text}">
+                <MenuItem Header="{DynamicResource m_TaskStatement}"/>
+                <MenuItem Header="{DynamicResource m_Grammar}"/>
+                <MenuItem Header="{DynamicResource m_GrammarClassification}"/>
+                <MenuItem Header="{DynamicResource m_AnalysisMethod}"/>
+                <MenuItem Header="{DynamicResource m_ErrorDiagnostics}"/>
+                <MenuItem Header="{DynamicResource m_TestExample}"/>
+                <MenuItem Header="{DynamicResource m_LiteratureList}"/>
+                <MenuItem Header="{DynamicResource m_SourceCode}"/>
+                <MenuItem Header="{DynamicResource m_AdjustInputTextSize}">
                     <MenuItem.HeaderTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Размер шрифта: " /> 
-                                <Slider Minimum="8" Maximum="40" IsSnapToTickEnabled="True" Margin="6,0,10,0"
-                                        Width="100" Value="{Binding FontSize, ElementName=TextEditor, Mode=TwoWay}">
+                                <TextBlock Text="{DynamicResource m_FontSizeChoose}" VerticalAlignment="Center" /> 
+                                <Slider Minimum="8" Maximum="40" IsSnapToTickEnabled="True" 
+                                        Margin="6,0,10,0" Width="100" 
+                                        Value="{Binding FontSize, ElementName=TextEditor, Mode=TwoWay}"
+                                        VerticalAlignment="Center">
                                 </Slider>
-                                <TextBox Text="{Binding Path=FontSize, ElementName=TextEditor, Mode=TwoWay}"/>
+                                <TextBox VerticalAlignment="Center"
+                                         Text="{Binding Path=FontSize, ElementName=TextEditor, Mode=TwoWay}"/>
                             </StackPanel>
                         </DataTemplate>
                     </MenuItem.HeaderTemplate>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="Пуск"/>
-            <MenuItem Header="Справка">
-                <MenuItem Header="Вызов справки" Click="GetHelp_Click"/>
-                <MenuItem Header="О программе" Click="GetAbout_Click"/>
+            <MenuItem Header="{DynamicResource m_Start}"/>
+            <MenuItem Header="{DynamicResource m_Help}">
+                <MenuItem Header="{DynamicResource m_GetHelp}" Click="GetHelp_Click"/>
+                <MenuItem Header="{DynamicResource m_GetAbout}" Click="GetAbout_Click"/>
             </MenuItem>
         </Menu>
         <ToolBar DockPanel.Dock="Top">
-            <Button Content="+ Создать" Click="CreateNewFile_Click"/>
-            <Button Content="Открыть" Click="OpenFile_Click"/>
-            <Button Content="Сохранить" Click="SaveFile_Click"/>
+            <Button Content="{DynamicResource m_Create}" Click="CreateNewFile_Click"/>
+            <Button Content="{DynamicResource m_Open}" Click="OpenFile_Click"/>
+            <Button Content="{DynamicResource m_Save}" Click="SaveFile_Click"/>
             <Button Content="←" Click="UndoText_Click">
                 <Button.ToolTip>
-                    <ToolTip Content="Отменить последнее совершённое действие"/>
+                    <ToolTip Content="{DynamicResource m_Undo}"/>
                 </Button.ToolTip>
             </Button>
             <Button Content="→" Click="RedoText_Click">
                 <Button.ToolTip>
-                    <ToolTip Content="Возвратить последнее отменённое действие"/>
+                    <ToolTip Content="{DynamicResource m_Redo}"/>
                 </Button.ToolTip>
             </Button>
-            <Button Content="Копировать" Click="CopySelectedText_Click">
+            <Button Content="{DynamicResource m_Copy}" Click="CopySelectedText_Click">
                 <Button.ToolTip>
                     <ToolTip Content="Ctrl + C"/>
                 </Button.ToolTip>
             </Button>
-            <Button Content="Вставить" Click="PasteText_Click">
+            <Button Content="{DynamicResource m_Paste}" Click="PasteText_Click">
                 <Button.ToolTip>
                     <ToolTip Content="Ctrl + V"/>
                 </Button.ToolTip>
             </Button>
-            <Button Content="Вырезать" Click="CutText_Click">
+            <Button Content="{DynamicResource m_Cut}" Click="CutText_Click">
                 <Button.ToolTip>
                     <ToolTip Content="Ctrl + X"/>
                 </Button.ToolTip>
             </Button>
-            <Button Content="Справка" Click="GetHelp_Click">
+            <Button Content="{DynamicResource m_GetHelp}" Click="GetHelp_Click">
                 <Button.ToolTip>
                     <ToolTip Content="Ctrl + V"/>
                 </Button.ToolTip>
             </Button>
-            <Button Content="О программе" Click="GetAbout_Click">
+            <Button Content="{DynamicResource m_GetAbout}" Click="GetAbout_Click">
                 <Button.ToolTip>
                     <ToolTip Content="Ctrl + V"/>
                 </Button.ToolTip>
@@ -129,16 +132,16 @@
                     <RowDefinition Height="20" />
                 </Grid.RowDefinitions>
                 <TabControl >
-                    <TabItem Header="Окно вывода">
+                    <TabItem Header="{DynamicResource m_OutputWindow}">
                         <TextBox Name="OutputText" Padding="3"
-                                 Text="IDE Orangutan was launched successfully"
+                                 Text="{DynamicResource m_IDEWasLaunchedSucc}"
                                  AcceptsReturn="True"
                                  FontSize="{Binding FontSize, ElementName=TextEditor, Mode=OneWay}"
                                  VerticalScrollBarVisibility="Auto"
                                  HorizontalScrollBarVisibility="Auto"
                                  IsReadOnly="True" />
                     </TabItem>
-                    <TabItem Header="Ошибки">
+                    <TabItem Header="{DynamicResource m_Errors}">
                         <DataGrid Name="ErrorsDataGrid" IsReadOnly="True"
                                   AutoGenerateColumns="False">
                             <DataGrid.Columns>
@@ -152,8 +155,8 @@
                     </TabItem>
                 </TabControl>
                 <DockPanel Grid.Row="1" VerticalAlignment="Bottom" Height="20">
-                    <Label Content="IDE ошибок не обнаружил" MinWidth="90" HorizontalAlignment="Right" VerticalContentAlignment="Center"/>
-                    <TextBlock Name="CurrentTime" HorizontalAlignment="Right" Padding="0,3,15,0"/>
+                    <Label Content="{DynamicResource m_IDEErrorsDoesnotFound}" MinWidth="90" HorizontalAlignment="Right" VerticalContentAlignment="Center"/>
+                    <TextBlock Name="CurrentTime" Text="{Binding CurrentTime}" HorizontalAlignment="Right" Padding="0,3,15,0"/>
                 </DockPanel>
             </Grid>
         </Grid>

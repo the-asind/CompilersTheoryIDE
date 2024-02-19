@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using CompilersTheoryIDE.ViewModel;
 using Microsoft.Win32;
 
 namespace CompilersTheoryIDE.View;
@@ -12,21 +14,22 @@ namespace CompilersTheoryIDE.View;
 public partial class MainWindowView : Window
 {
     private bool _isTextChanged;
+    private MainWindowViewModel _viewModel;
 
     public MainWindowView()
     {
         InitializeComponent();
+        _viewModel = new MainWindowViewModel();
+        DataContext = _viewModel;
         CreateMockupErrors();
+        SetupEventHandlers();
+    }
+    
+    // Sets up event handlers for UI elements.
+    private void SetupEventHandlers()
+    {
         Drop += MainWindow_Drop;
-        DataContext = this;
-        TextEditor.TextChanged += (sender, e) => _isTextChanged = true;
         Closing += WindowClosing;
-        
-        //  DispatcherTimer setup
-        var timer = new DispatcherTimer();
-        timer.Tick += _timer_Tick;
-        timer.Interval = new TimeSpan(0, 0, 1);
-        timer.Start();
     }
 
     private void MainWindow_Drop(object sender, DragEventArgs e)
@@ -39,19 +42,6 @@ public partial class MainWindowView : Window
             return;
         if (SaveFileCheckIsInterrupted()) return;
         OpenAndProcessFile(filePath);
-    }
-    
-    private DateTime _sessionTime = new(0, 0);
-    private void _timer_Tick(object? sender, EventArgs e)
-    {
-        // Updating the Label which displays the current second
-        CurrentTime.Text = DateTime.Now.ToString("H:mm:ss");
-
-        // updating onsession timer
-        _sessionTime = _sessionTime.AddSeconds(1);
-
-        // Forcing the CommandManager to raise the RequerySuggested event
-        CommandManager.InvalidateRequerySuggested();
     }
     
     public class Error
@@ -197,26 +187,18 @@ public partial class MainWindowView : Window
 
     private void GetHelp_Click(object sender, RoutedEventArgs e)
     {
-        const string helpFunctions =
-            $"Создать: Создает новый файл или проект." +
-            $"\n\nОткрыть: Открывает существующий файл или проект из файловой системы." +
-            $"\n\nСохранить: Сохраняет текущий файл." +
-            $"\n\nСохранить как: Сохраняет текущий файл с новым именем или в новом месте." +
-            $"\n\nВыход: Закрывает IDE." +
-            $"\n\nОтменить: Отменяет последнее действие." +
-            $"\n\nПовторить: Повторяет отмененное действие." +
-            $"\n\nВырезать: Удаляет выделенный текст или элемент и помещает его в буфер обмена." +
-            $"\n\nКопировать: Копирует выделенный текст или элемент в буфер обмена." +
-            $"\n\nВставить: Вставляет содержимое буфера обмена в текущее место курсора." +
-            $"\n\nУдалить: Удаляет выделенный текст или элемент без помещения в буфер обмена." +
-            $"\n\nВыделить все: Выделяет весь текст или элемент в текущем окне или документе.";
-        MessageBox.Show(helpFunctions, "Помощь", MessageBoxButton.OK, MessageBoxImage.Information);
+        string? helpFunctions = TryFindResource("HelpWindowContent") as string;
+        MessageBox.Show(helpFunctions, TryFindResource("m_Help") as string, 
+            MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     private void GetAbout_Click(object sender, RoutedEventArgs e)
     {
+        string? about = TryFindResource("AboutWindowContent") as string;
+        about += Assembly.GetExecutingAssembly().GetName().Version;
         //TODO: Заменить на словарь
-        MessageBox.Show("Orangutan IDE. Версия: 18.02.2024. Все права защищены.", "О программе");
+        MessageBox.Show(about, 
+            "TryFindResource(\"m_About\") as string");
     }
 }
 

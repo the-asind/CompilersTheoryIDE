@@ -1,0 +1,63 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:v="clr-namespace:System;assembly=mscorlib">
+    
+    <v:String x:Key="TitleIde">IDE Orangutan</v:String>
+
+    <v:String x:Key="m_File">File</v:String>
+    <v:String x:Key="m_Create">Create</v:String>
+    <v:String x:Key="m_Open">Open</v:String>
+    <v:String x:Key="m_Save">Save</v:String>
+    <v:String x:Key="m_SaveAs">Save As...</v:String>
+    <v:String x:Key="m_Exit">Exit</v:String>
+
+    <v:String x:Key="m_Edit">Edit</v:String>
+    <v:String x:Key="m_Undo">Undo</v:String>
+    <v:String x:Key="m_Redo">Redo</v:String>
+    <v:String x:Key="m_Cut">Cut</v:String>
+    <v:String x:Key="m_Copy">Copy</v:String>
+    <v:String x:Key="m_Paste">Paste</v:String>
+    <v:String x:Key="m_Delete">Delete</v:String>
+    <v:String x:Key="m_SelectAll">Select All</v:String>
+
+    <v:String x:Key="m_Text">Text</v:String>
+    <v:String x:Key="m_TaskStatement">Task Statement</v:String>
+    <v:String x:Key="m_Grammar">Grammar</v:String>
+    <v:String x:Key="m_GrammarClassification">Grammar Classification</v:String>
+    <v:String x:Key="m_AnalysisMethod">Analysis Method</v:String>
+    <v:String x:Key="m_ErrorDiagnostics">Error Diagnostics and Neutralization</v:String>
+    <v:String x:Key="m_TestExample">Test Example</v:String>
+    <v:String x:Key="m_LiteratureList">Literature List</v:String>
+    <v:String x:Key="m_SourceCode">Source Code</v:String>
+    <v:String x:Key="m_AdjustInputTextSize">Adjust Input Text Size</v:String>
+    <v:String x:Key="m_FontSizeChoose">Font size: </v:String>
+    
+    <v:String x:Key="m_Start">Start</v:String>
+    <v:String x:Key="m_Help">Help</v:String>
+    <v:String x:Key="m_GetHelp">Get Help</v:String>
+    <v:String x:Key="m_GetAbout">About</v:String>
+    
+    <v:String x:Key="m_OutputWindow">Output Window</v:String>
+    <v:String x:Key="m_Errors">Errors</v:String>
+    
+    <v:String x:Key="m_IDEErrorsDoesnotFound">IDE did not find any errors</v:String>
+    <v:String x:Key="m_IDEWasLaunchedSucc">IDE Orangutan was launched successfully</v:String>
+    
+    <v:String x:Key="HelpWindowContent">
+        Create: Creates a new file or project.\n\n
+        Open: Opens an existing file or project from the file system.\n\n
+        Save: Saves the current file.\n\n
+        Save As: Saves the current file with a new name or in a new location.\n\n
+        Exit: Closes the IDE.\n\n
+        Undo: Reverses the last action.\n\n
+        Redo: Repeats an undone action.\n\n
+        Cut: Removes the selected text or item and places it on the clipboard.\n\n
+        Copy: Copies the selected text or item to the clipboard.\n\n
+        Paste: Inserts the contents of the clipboard at the current cursor location.\n\n
+        Delete: Removes the selected text or item without placing it on the clipboard.\n\n
+        Select All: Selects all text or items in the current window or document.
+    </v:String>
+    
+    <v:String x:Key="AboutWindowContent">Orangutan IDE. Version: </v:String>
+    
+</ResourceDictionary>
