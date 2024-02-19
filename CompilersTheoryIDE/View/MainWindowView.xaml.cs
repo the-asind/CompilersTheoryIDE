@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Runtime.CompilerServices;
-using Microsoft.Win32;
 using System.Windows;
-using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Threading;
+using Microsoft.Win32;
 
-namespace CompilersTheoryIDE;
+namespace CompilersTheoryIDE.View;
 
-public partial class CustomIDEMainWindow : INotifyPropertyChanged
+public partial class MainWindowView : Window
 {
     private bool _isTextChanged;
 
-    public CustomIDEMainWindow()
+    public MainWindowView()
     {
         InitializeComponent();
         CreateMockupErrors();
@@ -21,6 +21,12 @@ public partial class CustomIDEMainWindow : INotifyPropertyChanged
         DataContext = this;
         TextEditor.TextChanged += (sender, e) => _isTextChanged = true;
         Closing += WindowClosing;
+        
+        //  DispatcherTimer setup
+        var timer = new DispatcherTimer();
+        timer.Tick += _timer_Tick;
+        timer.Interval = new TimeSpan(0, 0, 1);
+        timer.Start();
     }
 
     private void MainWindow_Drop(object sender, DragEventArgs e)
@@ -29,31 +35,53 @@ public partial class CustomIDEMainWindow : INotifyPropertyChanged
         var files = (string[])e.Data.GetData(DataFormats.FileDrop);
         if (files.Length <= 0) return;
         var filePath = files[0];
-        if (Path.GetExtension(filePath).Equals(".orangutan", StringComparison.InvariantCultureIgnoreCase))
-        {
-            if (SaveFileCheckIsInterrupted()) return;
-            OpenAndProcessFile(filePath);
-        }
+        if (!Path.GetExtension(filePath).Equals(".orangutan", StringComparison.InvariantCultureIgnoreCase)) 
+            return;
+        if (SaveFileCheckIsInterrupted()) return;
+        OpenAndProcessFile(filePath);
+    }
+    
+    private DateTime _sessionTime = new(0, 0);
+    private void _timer_Tick(object? sender, EventArgs e)
+    {
+        // Updating the Label which displays the current second
+        CurrentTime.Text = DateTime.Now.ToString("H:mm:ss");
+
+        // updating onsession timer
+        _sessionTime = _sessionTime.AddSeconds(1);
+
+        // Forcing the CommandManager to raise the RequerySuggested event
+        CommandManager.InvalidateRequerySuggested();
     }
     
     public class Error
     {
+        public Error(int id, string filePath, int line, int column, string message)
+        {
+            FilePath = filePath;
+            Message = message;
+            Line = line;
+            Column = column;
+            Id = id;
+        }
+        
         public int Id { get; set; }
         public string FilePath { get; set; }
         public int Line { get; set; }
         public int Column { get; set; }
         public string Message { get; set; }
     }
+
     private void CreateMockupErrors()
     {
-        // Создать тестовые данные
         var errors = new List<Error>
         {
-            new Error { Id = 1, FilePath = "MainWindow.xaml", Line = 12, Column = 15, Message = "The property 'Text' is set more than once." },
-            new Error { Id = 2, FilePath = "MainWindow.xaml.cs", Line = 17, Column = 21, Message = "The name 'button1' does not exist in the current context." }
+            new(1, "MainWindow.xaml", 12, 15,
+                "The property 'Text' is set more than once."),
+            new(2, "MainWindow.xaml.cs", 17, 21,
+                "The name 'button1' does not exist in the current context.")
         };
 
-        // Привязать тестовые данные к DataGrid
         ErrorsDataGrid.ItemsSource = errors;
     }
 
@@ -63,14 +91,12 @@ public partial class CustomIDEMainWindow : INotifyPropertyChanged
         {
             case 1:
                 SaveFile();
-                break;
+                return false;
             case 0:
-                break;
-            case -1:
+                return false;
+            default:
                 return true;
         }
-
-        return false;
     }
 
     private void OpenAndProcessFile(string filePath)
@@ -82,19 +108,15 @@ public partial class CustomIDEMainWindow : INotifyPropertyChanged
 
     private int CheckIfTextWasChanged()
     {
-        if (!_isTextChanged) return 0; // No changes were made, proceed with any intended action
+        if (!_isTextChanged) return 0; 
         var result = MessageBox.Show("Сохранить изменения в файле?",
             "Сохранение", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
 
-        // Check user's response and act accordingly
         return result switch
         {
-            MessageBoxResult.Yes => 1 // Proceed to save changes
-            ,
-            MessageBoxResult.No => 0 // Do not save changes
-            ,
-            MessageBoxResult.Cancel => -1 // Cancel the current action (exit or new file)
-            ,
+            MessageBoxResult.Yes => 1, // Proceed to save changes
+            MessageBoxResult.No => 0, // Do not save changes
+            MessageBoxResult.Cancel => -1, // Cancel the current action (exit or new file)
             _ => 0 // No changes were made, proceed with any intended action
         };
     }
@@ -103,13 +125,12 @@ public partial class CustomIDEMainWindow : INotifyPropertyChanged
     {
         if (SaveFileCheckIsInterrupted()) return;
 
-        var openFileDialog = new OpenFileDialog();
-        openFileDialog.Filter = "Orangutan files (*.orangutan)|*.orangutan";
+        var openFileDialog = new OpenFileDialog { Filter = "Orangutan files (*.orangutan)|*.orangutan" };
 
         if (openFileDialog.ShowDialog() == true) OpenAndProcessFile(openFileDialog.FileName);
     }
 
-    private void WindowClosing(object sender, CancelEventArgs e)
+    private void WindowClosing(object? sender, CancelEventArgs e)
     {
         switch (CheckIfTextWasChanged())
         {
@@ -135,7 +156,7 @@ public partial class CustomIDEMainWindow : INotifyPropertyChanged
         if (SaveFileCheckIsInterrupted()) return;
 
         TextEditor.Clear();
-        _isTextChanged = false; // Reset flag because text is now cleared
+        _isTextChanged = false;
     }
 
     private void CopySelectedText_Click(object sender, RoutedEventArgs e)
@@ -144,35 +165,19 @@ public partial class CustomIDEMainWindow : INotifyPropertyChanged
         Clipboard.SetText(selectedText);
     }
 
-    private void PasteText_Click(object sender, RoutedEventArgs e)
-    {
-        TextEditor.Paste();
-    }
+    private void PasteText_Click(object sender, RoutedEventArgs e) => TextEditor.Paste();
 
-    private void CutText_Click(object sender, RoutedEventArgs e)
-    {
-        TextEditor.Cut();
-    }
+    private void CutText_Click(object sender, RoutedEventArgs e) => TextEditor.Cut();
 
-    private void DeleteText_Click(object sender, RoutedEventArgs e)
-    {
-        TextEditor.Delete();
-    }
+    private void DeleteText_Click(object sender, RoutedEventArgs e) => TextEditor.Delete();
 
-    private void SelectAllText_Click(object sender, RoutedEventArgs e)
-    {
-        TextEditor.SelectAll();
-    }
+    private void SelectAllText_Click(object sender, RoutedEventArgs e) => TextEditor.SelectAll();
 
-    private void UndoText_Click(object sender, RoutedEventArgs e)
-    {
-        TextEditor.Undo();
-    }
+    private void UndoText_Click(object sender, RoutedEventArgs e) => TextEditor.Undo();
 
-    private void RedoText_Click(object sender, RoutedEventArgs e)
-    {
-        TextEditor.Redo();
-    }
+    private void RedoText_Click(object sender, RoutedEventArgs e) => TextEditor.Redo();
+    
+    private void SaveAs_Click(object sender, RoutedEventArgs e) => SaveFile();
 
     private void SaveFile_Click(object sender, RoutedEventArgs e)
     {
@@ -182,17 +187,9 @@ public partial class CustomIDEMainWindow : INotifyPropertyChanged
             TextEditor.Save(_currentFilePath);
     }
 
-    private void SaveAs_Click(object sender, RoutedEventArgs e)
-    {
-        SaveFile();
-    }
-
     private void SaveFile()
     {
-        var saveFileDialog = new SaveFileDialog
-        {
-            Filter = "Orangutan files (*.orangutan)|*.orangutan"
-        };
+        var saveFileDialog = new SaveFileDialog { Filter = "Orangutan files (*.orangutan)|*.orangutan" };
         if (saveFileDialog.ShowDialog() != true) return;
         TextEditor.Save(saveFileDialog.FileName);
         _currentFilePath = saveFileDialog.FileName;
@@ -223,19 +220,24 @@ public partial class CustomIDEMainWindow : INotifyPropertyChanged
     }
 }
 
-public partial class CustomIDEMainWindow : Window, INotifyPropertyChanged
+public partial class MainWindowView : INotifyPropertyChanged
 {
     private string _currentFilePath = "Новый документ";
+
     public string CurrentFilePath
     {
         get => _currentFilePath;
         set
         {
             _currentFilePath = value;
-            OnPropertyChanged("CurrentFilePath");
+            OnPropertyChanged(nameof(CurrentFilePath));
         }
     }
 
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    private void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
 }

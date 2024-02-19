@@ -1,4 +1,4 @@
-﻿<Window x:Class="CompilersTheoryIDE.CustomIDEMainWindow"
+﻿<Window x:Class="CompilersTheoryIDE.View.MainWindowView"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
@@ -123,28 +123,39 @@
             </Grid>
 
             <GridSplitter Grid.Row="1" Height="4" HorizontalAlignment="Stretch"/>
-            <TabControl Grid.Row="2">
-                <TabItem Header="Окно вывода">
-                    <TextBox Name="OutputText" Padding="3"
-                             Text="IDE Orangutan was launched successfully"
-                             AcceptsReturn="True" FontSize="{Binding FontSize, ElementName=TextEditor, Mode=OneWay}"
-                             VerticalScrollBarVisibility="Auto"
-                             HorizontalScrollBarVisibility="Auto"
-                             IsReadOnly="True" />
-                </TabItem>
-                <TabItem Header="Ошибки">
-                    <DataGrid Name="ErrorsDataGrid"
-                              AutoGenerateColumns="False">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="N" Binding="{Binding Id}" />
-                            <DataGridTextColumn Header="File Path" Binding="{Binding FilePath}" />
-                            <DataGridTextColumn Header="Line" Binding="{Binding Line}" />
-                            <DataGridTextColumn Header="Column" Binding="{Binding Column}" />
-                            <DataGridTextColumn Header="Message" Binding="{Binding Message}" />
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </TabItem>
-            </TabControl>
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="20" />
+                </Grid.RowDefinitions>
+                <TabControl >
+                    <TabItem Header="Окно вывода">
+                        <TextBox Name="OutputText" Padding="3"
+                                 Text="IDE Orangutan was launched successfully"
+                                 AcceptsReturn="True"
+                                 FontSize="{Binding FontSize, ElementName=TextEditor, Mode=OneWay}"
+                                 VerticalScrollBarVisibility="Auto"
+                                 HorizontalScrollBarVisibility="Auto"
+                                 IsReadOnly="True" />
+                    </TabItem>
+                    <TabItem Header="Ошибки">
+                        <DataGrid Name="ErrorsDataGrid" IsReadOnly="True"
+                                  AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="N" Binding="{Binding Id}" />
+                                <DataGridTextColumn Header="File Path" Binding="{Binding FilePath}" />
+                                <DataGridTextColumn Header="Line" Binding="{Binding Line}" />
+                                <DataGridTextColumn Header="Column" Binding="{Binding Column}" />
+                                <DataGridTextColumn Header="Message" Binding="{Binding Message}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </TabItem>
+                </TabControl>
+                <DockPanel Grid.Row="1" VerticalAlignment="Bottom" Height="20">
+                    <Label Content="IDE ошибок не обнаружил" MinWidth="90" HorizontalAlignment="Right" VerticalContentAlignment="Center"/>
+                    <TextBlock Name="CurrentTime" HorizontalAlignment="Right" Padding="0,3,15,0"/>
+                </DockPanel>
+            </Grid>
         </Grid>
     </DockPanel>
 </Window>
