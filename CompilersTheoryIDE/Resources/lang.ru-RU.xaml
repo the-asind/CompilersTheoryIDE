@@ -1,4 +1,63 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:v="clr-namespace:System;assembly=mscorlib">
+    
+    <v:String x:Key="TitleIde">IDE Orangutan</v:String>
+
+    <v:String x:Key="m_File">Файл</v:String>
+    <v:String x:Key="m_Create">Создать</v:String>
+    <v:String x:Key="m_Open">Открыть</v:String>
+    <v:String x:Key="m_Save">Сохранить</v:String>
+    <v:String x:Key="m_SaveAs">Сохранить как...</v:String>
+    <v:String x:Key="m_Exit">Выйти</v:String>
+
+    <v:String x:Key="m_Edit">Правка</v:String>
+    <v:String x:Key="m_Undo">Отменить</v:String>
+    <v:String x:Key="m_Redo">Вернуть</v:String>
+    <v:String x:Key="m_Cut">Вырезать</v:String>
+    <v:String x:Key="m_Copy">Копировать</v:String>
+    <v:String x:Key="m_Paste">Вставить</v:String>
+    <v:String x:Key="m_Delete">Удалить</v:String>
+    <v:String x:Key="m_SelectAll">Выделить всё</v:String>
+
+    <v:String x:Key="m_Text">Текст</v:String>
+    <v:String x:Key="m_TaskStatement">Описание задачи</v:String>
+    <v:String x:Key="m_Grammar">Грамматика</v:String>
+    <v:String x:Key="m_GrammarClassification">Классификация грамматики</v:String>
+    <v:String x:Key="m_AnalysisMethod">Метод анализа</v:String>
+    <v:String x:Key="m_ErrorDiagnostics">Ошибка диагностики и нейтрализации</v:String>
+    <v:String x:Key="m_TestExample">Пример теста</v:String>
+    <v:String x:Key="m_LiteratureList">Список литературы</v:String>
+    <v:String x:Key="m_SourceCode">Исходный код</v:String>
+    <v:String x:Key="m_AdjustInputTextSize">Настройка размера шрифта ввода</v:String>
+    <v:String x:Key="m_FontSizeChoose">Размер шрифта: </v:String>
+    
+    <v:String x:Key="m_Start">Старт</v:String> 
+    <v:String x:Key="m_Help">Помощь</v:String>
+    <v:String x:Key="m_GetHelp">Cправка</v:String>
+    <v:String x:Key="m_GetAbout">О программе</v:String>
+    
+    <v:String x:Key="m_OutputWindow">Окно вывода</v:String>
+    <v:String x:Key="m_Errors">Ошибки</v:String>
+    
+    <v:String x:Key="m_IDEErrorsDoesnotFound">IDE не нашло никаких ошибок</v:String>
+    <v:String x:Key="m_IDEWasLaunchedSucc">IDE Orangutan успешно запущено</v:String>
+    
+    <v:String x:Key="m_HelpWindowContent">
+        Создать: Создает новый файл или проект.&#x0A;&#x0A;
+        Открыть: Открывает существующий файл или проект из файловой системы.&#x0A;&#x0A;
+        Сохранить: Сохраняет текущий файл.&#x0A;&#x0A;
+        Сохранить как: Сохраняет текущий файл с новым именем или в новом месте.&#x0A;&#x0A;
+        Выйти: Закрывает IDE.&#x0A;&#x0A;
+        Отменить: Откатывает последнее действие.&#x0A;&#x0A;
+        Вернуть: Повторяет отмененное действие.&#x0A;&#x0A;
+        Вырезать: Удаляет выделенный текст или элемент и помещает его в буфер обмена.&#x0A;&#x0A;
+        Копировать: Копирует выделенный текст или элемент в буфер обмена.&#x0A;&#x0A;
+        Вставить: Вставляет содержимое буфера обмена в текущее местоположение курсора.&#x0A;&#x0A;
+        Удалить: Удаляет выделенный текст или элемент, не помещая его в буфер обмена.&#x0A;&#x0A;
+        Выделить все: Выделяет весь текст или элементы в текущем окне или документе.
+    </v:String>
+    
+    <v:String x:Key="AboutWindowContent">IDE Orangutan. Версия: </v:String>
     
 </ResourceDictionary>

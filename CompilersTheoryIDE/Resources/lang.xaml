@@ -43,21 +43,26 @@
     <v:String x:Key="m_IDEErrorsDoesnotFound">IDE did not find any errors</v:String>
     <v:String x:Key="m_IDEWasLaunchedSucc">IDE Orangutan was launched successfully</v:String>
     
-    <v:String x:Key="HelpWindowContent">
-        Create: Creates a new file or project.\n\n
-        Open: Opens an existing file or project from the file system.\n\n
-        Save: Saves the current file.\n\n
-        Save As: Saves the current file with a new name or in a new location.\n\n
-        Exit: Closes the IDE.\n\n
-        Undo: Reverses the last action.\n\n
-        Redo: Repeats an undone action.\n\n
-        Cut: Removes the selected text or item and places it on the clipboard.\n\n
-        Copy: Copies the selected text or item to the clipboard.\n\n
-        Paste: Inserts the contents of the clipboard at the current cursor location.\n\n
-        Delete: Removes the selected text or item without placing it on the clipboard.\n\n
+    <v:String x:Key="m_HelpWindowContent">
+        Create: Creates a new file or project.&#x0A;&#x0A;
+        Open: Opens an existing file or project from the file system.&#x0A;&#x0A;
+        Save: Saves the current file.&#x0A;&#x0A;
+        Save As: Saves the current file with a new name or in a new location.&#x0A;&#x0A;
+        Exit: Closes the IDE.&#x0A;&#x0A;
+        Undo: Reverses the last action.&#x0A;&#x0A;
+        Redo: Repeats an undone action.&#x0A;&#x0A;
+        Cut: Removes the selected text or item and places it on the clipboard.&#x0A;&#x0A;
+        Copy: Copies the selected text or item to the clipboard.&#x0A;&#x0A;
+        Paste: Inserts the contents of the clipboard at the current cursor location.&#x0A;&#x0A;
+        Delete: Removes the selected text or item without placing it on the clipboard.&#x0A;&#x0A;
         Select All: Selects all text or items in the current window or document.
     </v:String>
     
-    <v:String x:Key="AboutWindowContent">Orangutan IDE. Version: </v:String>
+    <v:String x:Key="m_AboutWindowContent">Orangutan IDE. Version: </v:String>
+    <v:String x:Key="m_Localization">Localization</v:String>
+    <v:String x:Key="m_English">English, en-US</v:String>
+    <v:String x:Key="m_Russian">Russian, ru-RU</v:String>
+    
+    
     
 </ResourceDictionary>

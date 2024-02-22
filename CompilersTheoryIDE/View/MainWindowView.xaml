@@ -62,6 +62,7 @@
                 <MenuItem Header="{DynamicResource m_GetHelp}" Click="GetHelp_Click"/>
                 <MenuItem Header="{DynamicResource m_GetAbout}" Click="GetAbout_Click"/>
             </MenuItem>
+            <MenuItem x:Name="menuLanguage" Header="{DynamicResource m_Localization}" />
         </Menu>
         <ToolBar DockPanel.Dock="Top">
             <Button Content="{DynamicResource m_Create}" Click="CreateNewFile_Click"/>

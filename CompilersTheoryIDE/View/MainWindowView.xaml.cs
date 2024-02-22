@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using CompilersTheoryIDE.ViewModel;
@@ -23,6 +25,42 @@ public partial class MainWindowView : Window
         DataContext = _viewModel;
         CreateMockupErrors();
         SetupEventHandlers();
+        
+        App.LanguageChanged += LanguageChanged;
+
+        CultureInfo currLang = App.Language;
+
+        //Заполняем меню смены языка:
+        menuLanguage.Items.Clear();
+        foreach (var lang in App.Languages)
+        {
+            var menuLang = new MenuItem
+            {
+                Header = lang.DisplayName,
+                Tag = lang,
+                IsChecked = lang.Equals(currLang)
+            };
+            menuLang.Click += ChangeLanguageClick;
+            menuLanguage.Items.Add(menuLang);
+        }
+    }
+    
+    private void LanguageChanged(object sender, EventArgs e)
+    {
+        var currLang = App.Language;
+
+        //Отмечаем нужный пункт смены языка как выбранный язык
+        foreach (MenuItem i in menuLanguage.Items)
+        {
+            var ci = i.Tag as CultureInfo;
+            i.IsChecked = ci != null && ci.Equals(currLang);
+        }
+    }
+
+    private static void ChangeLanguageClick(object sender, EventArgs e)
+    {
+        if (sender is not MenuItem mi) return;
+        if (mi.Tag is CultureInfo lang) App.Language = lang;
     }
     
     // Sets up event handlers for UI elements.
@@ -187,18 +225,17 @@ public partial class MainWindowView : Window
 
     private void GetHelp_Click(object sender, RoutedEventArgs e)
     {
-        string? helpFunctions = TryFindResource("HelpWindowContent") as string;
+        string? helpFunctions = TryFindResource("m_HelpWindowContent") as string;
         MessageBox.Show(helpFunctions, TryFindResource("m_Help") as string, 
             MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     private void GetAbout_Click(object sender, RoutedEventArgs e)
     {
-        string? about = TryFindResource("AboutWindowContent") as string;
+        string? about = TryFindResource("m_AboutWindowContent") as string;
         about += Assembly.GetExecutingAssembly().GetName().Version;
-        //TODO: Заменить на словарь
         MessageBox.Show(about, 
-            "TryFindResource(\"m_About\") as string");
+            TryFindResource("m_GetAbout") as string);
     }
 }
 
