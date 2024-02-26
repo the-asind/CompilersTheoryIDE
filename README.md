@@ -29,3 +29,8 @@ _Рис. 6. Справка. Помощь._
 ![image](https://github.com/the-asind/CompilersTheoryIDE/assets/84527186/d154be84-71bd-4f07-b723-7ea2f03d5eb7)
 
 _Рис. 7. Справка. О программе_
+
+![image](https://github.com/the-asind/CompilersTheoryIDE/assets/84527186/a27ed87f-fdd7-4d84-958a-7c60ceeb7f4e) ![image](https://github.com/the-asind/CompilersTheoryIDE/assets/84527186/c125aa9e-6017-4eac-86a7-43b5d128d237)
+
+
+_Рис. 8 (а, б). Локализация. Английский и русский языки._
