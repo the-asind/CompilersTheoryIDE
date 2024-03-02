@@ -1,7 +1,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:v="clr-namespace:System;assembly=mscorlib">
-    
+
     <v:String x:Key="TitleIde">IDE Orangutan</v:String>
 
     <v:String x:Key="m_File">File</v:String>
@@ -31,18 +31,33 @@
     <v:String x:Key="m_SourceCode">Source Code</v:String>
     <v:String x:Key="m_AdjustInputTextSize">Adjust Input Text Size</v:String>
     <v:String x:Key="m_FontSizeChoose">Font size: </v:String>
-    
+
     <v:String x:Key="m_Start">Start</v:String>
     <v:String x:Key="m_Help">Help</v:String>
     <v:String x:Key="m_GetHelp">Get Help</v:String>
     <v:String x:Key="m_GetAbout">About</v:String>
-    
+
     <v:String x:Key="m_OutputWindow">Output Window</v:String>
-    <v:String x:Key="m_Errors">Errors</v:String>
+    <v:String x:Key="m_Parser">Parser</v:String>
+    <v:String x:Key="m_Scanner">Scanner</v:String>
+
+    <v:String x:Key="m_LexemeCode">Number</v:String>
+    <v:String x:Key="m_LexemeCodeName">Type</v:String>
+    <v:String x:Key="m_Lexeme">Lexeme</v:String>
+    <v:String x:Key="m_Position">Location</v:String>
+    <v:String x:Key="m_End">End</v:String>
     
+    <v:String x:Key="m_SingleLineComment">Single-Line Comment</v:String>
+    <v:String x:Key="m_MultiLineDoubleQuotesComment">Multi-Line Double Quotes Comment</v:String>
+    <v:String x:Key="m_MultiLineSingleQuotesComment">Multi-Line Single Quotes Comment</v:String>
+    <v:String x:Key="m_NewLine">New Line</v:String>
+    <v:String x:Key="m_SymbolSequence">Symbol Sequence</v:String>
+
+    <v:String x:Key="m_Errors">Errors</v:String>
+
     <v:String x:Key="m_IDEErrorsDoesnotFound">IDE did not find any errors</v:String>
     <v:String x:Key="m_IDEWasLaunchedSucc">IDE Orangutan was launched successfully</v:String>
-    
+
     <v:String x:Key="m_HelpWindowContent">
         Create: Creates a new file or project.&#x0A;&#x0A;
         Open: Opens an existing file or project from the file system.&#x0A;&#x0A;
@@ -57,12 +72,11 @@
         Delete: Removes the selected text or item without placing it on the clipboard.&#x0A;&#x0A;
         Select All: Selects all text or items in the current window or document.
     </v:String>
-    
+
     <v:String x:Key="m_AboutWindowContent">Orangutan IDE. Version: </v:String>
     <v:String x:Key="m_Localization">Localization</v:String>
     <v:String x:Key="m_English">English, en-US</v:String>
     <v:String x:Key="m_Russian">Russian, ru-RU</v:String>
-    
-    
-    
+
+
 </ResourceDictionary>

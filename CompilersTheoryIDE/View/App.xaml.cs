@@ -10,8 +10,6 @@ namespace CompilersTheoryIDE.View;
 
 public partial class App
 {
-    public static List<CultureInfo> Languages { get; } = new();
-
     public App()
     {
         InitializeComponent();
@@ -24,8 +22,7 @@ public partial class App
         Language = Settings.Default.DefaultLanguage;
     }
 
-    //Евент для оповещения всех окон приложения
-    public static event EventHandler? LanguageChanged;
+    public static List<CultureInfo> Languages { get; } = new();
 
     public static CultureInfo Language
     {
@@ -66,6 +63,9 @@ public partial class App
             LanguageChanged?.Invoke(Current, EventArgs.Empty);
         }
     }
+
+    //Евент для оповещения всех окон приложения
+    public static event EventHandler? LanguageChanged;
 
     private static void App_LanguageChanged(object? sender, EventArgs e)
     {

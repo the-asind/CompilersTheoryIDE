@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    
+
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
         <TargetFramework>net6.0-windows</TargetFramework>
@@ -7,37 +7,37 @@
         <UseWPF>true</UseWPF>
         <ApplicationIcon>Media\orangutan.ico</ApplicationIcon>
         <NeutralLanguage>en-US</NeutralLanguage>
+        <LangVersion>preview</LangVersion>
+        <Authors>asind</Authors>
+        <PackageProjectUrl>https://github.com/the-asind/CompilersTheoryIDE</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/the-asind/CompilersTheoryIDE</RepositoryUrl>
     </PropertyGroup>
-    
+
     <ItemGroup>
-        <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
-        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-        <PackageReference Include="Material.Icons" Version="2.1.6" />
-        <PackageReference Include="MaterialDesignExtensions" Version="4.0.0-a02" />
-        <PackageReference Include="MaterialDesignThemes" Version="4.9.0" />
-        <PackageReference Include="MaterialDesignColors" Version="2.1.4" />
-        <PackageReference Include="MaterialDesignThemes.MahApps" Version="0.3.0" />
+        <PackageReference Include="AvalonEdit" Version="6.3.0.90"/>
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2"/>
+        <PackageReference Include="Material.Icons" Version="2.1.6"/>
+        <PackageReference Include="MaterialDesignExtensions" Version="4.0.0-a02"/>
+        <PackageReference Include="MaterialDesignThemes" Version="4.9.0"/>
+        <PackageReference Include="MaterialDesignColors" Version="2.1.4"/>
+        <PackageReference Include="MaterialDesignThemes.MahApps" Version="0.3.0"/>
     </ItemGroup>
-    
+
     <ItemGroup>
         <ApplicationDefinition Include="View\App.xaml">
             <Generator>MSBuild:Compile</Generator>
             <XamlRuntime>Wpf</XamlRuntime>
         </ApplicationDefinition>
     </ItemGroup>
-    
+
     <ItemGroup>
-      <Folder Include="Model\" />
-    </ItemGroup>
-    
-    <ItemGroup>
-      <Page Update="Resources\lang.xaml">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-        <Generator>XamlIntelliSenseFileGenerator</Generator>
-      </Page>
-      <Page Update="Resources\lang.ru-RU.xaml">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-        <Generator>XamlIntelliSenseFileGenerator</Generator>
-      </Page>
+        <Page Update="Resources\lang.xaml">
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+            <Generator>XamlIntelliSenseFileGenerator</Generator>
+        </Page>
+        <Page Update="Resources\lang.ru-RU.xaml">
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+            <Generator>XamlIntelliSenseFileGenerator</Generator>
+        </Page>
     </ItemGroup>
 </Project>

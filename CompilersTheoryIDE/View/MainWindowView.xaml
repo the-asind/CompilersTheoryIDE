@@ -9,132 +9,151 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
-        xmlns:system="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d"
         AllowDrop="True"
         Title="Orangutan IDE" Height="600" Width="900" MinWidth="550" MinHeight="500">
     <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="{DynamicResource m_File}">
-                <MenuItem Header="{DynamicResource m_Create}" Click="CreateNewFile_Click"/>
-                <MenuItem Header="{DynamicResource m_Open}" Click="OpenFile_Click"/>
-                <MenuItem Header="{DynamicResource m_Save}" Click="SaveFile_Click"/>
-                <MenuItem Header="{DynamicResource m_SaveAs}" Click="SaveAs_Click"/>
-                <MenuItem Header="{DynamicResource m_Exit}" Click="Exit_Click"/>
+                <MenuItem Header="{DynamicResource m_Create}" Click="CreateNewFile_Click" />
+                <MenuItem Header="{DynamicResource m_Open}" Click="OpenFile_Click" />
+                <MenuItem Header="{DynamicResource m_Save}" Click="SaveFile_Click" />
+                <MenuItem Header="{DynamicResource m_SaveAs}" Click="SaveAs_Click" />
+                <MenuItem Header="{DynamicResource m_Exit}" Click="Exit_Click" />
             </MenuItem>
             <MenuItem Header="{DynamicResource m_Edit}">
-                <MenuItem Header="{DynamicResource m_Undo}" Click="UndoText_Click"/>
-                <MenuItem Header="{DynamicResource m_Redo}" Click="RedoText_Click"/>
-                <MenuItem Header="{DynamicResource m_Cut}" Click="CutText_Click"/>
-                <MenuItem Header="{DynamicResource m_Copy}" Click="CopySelectedText_Click"/>
-                <MenuItem Header="{DynamicResource m_Paste}" Click="PasteText_Click"/>
-                <MenuItem Header="{DynamicResource m_Delete}" Click="DeleteText_Click"/>
-                <MenuItem Header="{DynamicResource m_SelectAll}" Click="SelectAllText_Click"/>
+                <MenuItem Header="{DynamicResource m_Undo}" Click="UndoText_Click" />
+                <MenuItem Header="{DynamicResource m_Redo}" Click="RedoText_Click" />
+                <MenuItem Header="{DynamicResource m_Cut}" Click="CutText_Click" />
+                <MenuItem Header="{DynamicResource m_Copy}" Click="CopySelectedText_Click" />
+                <MenuItem Header="{DynamicResource m_Paste}" Click="PasteText_Click" />
+                <MenuItem Header="{DynamicResource m_Delete}" Click="DeleteText_Click" />
+                <MenuItem Header="{DynamicResource m_SelectAll}" Click="SelectAllText_Click" />
             </MenuItem>
             <MenuItem Header="{DynamicResource m_Text}">
-                <MenuItem Header="{DynamicResource m_TaskStatement}"/>
-                <MenuItem Header="{DynamicResource m_Grammar}"/>
-                <MenuItem Header="{DynamicResource m_GrammarClassification}"/>
-                <MenuItem Header="{DynamicResource m_AnalysisMethod}"/>
-                <MenuItem Header="{DynamicResource m_ErrorDiagnostics}"/>
-                <MenuItem Header="{DynamicResource m_TestExample}"/>
-                <MenuItem Header="{DynamicResource m_LiteratureList}"/>
-                <MenuItem Header="{DynamicResource m_SourceCode}"/>
+                <MenuItem Header="{DynamicResource m_TaskStatement}" />
+                <MenuItem Header="{DynamicResource m_Grammar}" />
+                <MenuItem Header="{DynamicResource m_GrammarClassification}" />
+                <MenuItem Header="{DynamicResource m_AnalysisMethod}" />
+                <MenuItem Header="{DynamicResource m_ErrorDiagnostics}" />
+                <MenuItem Header="{DynamicResource m_TestExample}" />
+                <MenuItem Header="{DynamicResource m_LiteratureList}" />
+                <MenuItem Header="{DynamicResource m_SourceCode}" />
                 <MenuItem Header="{DynamicResource m_AdjustInputTextSize}">
                     <MenuItem.HeaderTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{DynamicResource m_FontSizeChoose}" VerticalAlignment="Center" /> 
-                                <Slider Minimum="8" Maximum="40" IsSnapToTickEnabled="True" 
-                                        Margin="6,0,10,0" Width="100" 
+                                <TextBlock Text="{DynamicResource m_FontSizeChoose}" VerticalAlignment="Center" />
+                                <Slider Minimum="8" Maximum="40" IsSnapToTickEnabled="True"
+                                        Margin="6,0,10,0" Width="100"
                                         Value="{Binding FontSize, ElementName=TextEditor, Mode=TwoWay}"
-                                        VerticalAlignment="Center">
-                                </Slider>
+                                        VerticalAlignment="Center" />
                                 <TextBox VerticalAlignment="Center"
-                                         Text="{Binding Path=FontSize, ElementName=TextEditor, Mode=TwoWay}"/>
+                                         Text="{Binding Path=FontSize, ElementName=TextEditor, Mode=TwoWay}" />
                             </StackPanel>
                         </DataTemplate>
                     </MenuItem.HeaderTemplate>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="{DynamicResource m_Start}"/>
+            <MenuItem Header="{DynamicResource m_Start}" />
             <MenuItem Header="{DynamicResource m_Help}">
-                <MenuItem Header="{DynamicResource m_GetHelp}" Click="GetHelp_Click"/>
-                <MenuItem Header="{DynamicResource m_GetAbout}" Click="GetAbout_Click"/>
+                <MenuItem Header="{DynamicResource m_GetHelp}" Click="GetHelp_Click" />
+                <MenuItem Header="{DynamicResource m_GetAbout}" Click="GetAbout_Click" />
             </MenuItem>
             <MenuItem x:Name="menuLanguage" Header="{DynamicResource m_Localization}" />
         </Menu>
         <ToolBar DockPanel.Dock="Top">
-            <Button Content="{DynamicResource m_Create}" Click="CreateNewFile_Click"/>
-            <Button Content="{DynamicResource m_Open}" Click="OpenFile_Click"/>
-            <Button Content="{DynamicResource m_Save}" Click="SaveFile_Click"/>
+            <Button Content="{DynamicResource m_Create}" Click="CreateNewFile_Click" />
+            <Button Content="{DynamicResource m_Open}" Click="OpenFile_Click" />
+            <Button Content="{DynamicResource m_Save}" Click="SaveFile_Click" />
             <Button Content="←" Click="UndoText_Click">
                 <Button.ToolTip>
-                    <ToolTip Content="{DynamicResource m_Undo}"/>
+                    <ToolTip Content="{DynamicResource m_Undo}" />
                 </Button.ToolTip>
             </Button>
             <Button Content="→" Click="RedoText_Click">
                 <Button.ToolTip>
-                    <ToolTip Content="{DynamicResource m_Redo}"/>
+                    <ToolTip Content="{DynamicResource m_Redo}" />
                 </Button.ToolTip>
             </Button>
             <Button Content="{DynamicResource m_Copy}" Click="CopySelectedText_Click">
                 <Button.ToolTip>
-                    <ToolTip Content="Ctrl + C"/>
+                    <ToolTip Content="Ctrl + C" />
                 </Button.ToolTip>
             </Button>
             <Button Content="{DynamicResource m_Paste}" Click="PasteText_Click">
                 <Button.ToolTip>
-                    <ToolTip Content="Ctrl + V"/>
+                    <ToolTip Content="Ctrl + V" />
                 </Button.ToolTip>
             </Button>
             <Button Content="{DynamicResource m_Cut}" Click="CutText_Click">
                 <Button.ToolTip>
-                    <ToolTip Content="Ctrl + X"/>
+                    <ToolTip Content="Ctrl + X" />
                 </Button.ToolTip>
             </Button>
             <Button Content="{DynamicResource m_GetHelp}" Click="GetHelp_Click">
                 <Button.ToolTip>
-                    <ToolTip Content="Ctrl + V"/>
+                    <ToolTip Content="Ctrl + V" />
                 </Button.ToolTip>
             </Button>
             <Button Content="{DynamicResource m_GetAbout}" Click="GetAbout_Click">
                 <Button.ToolTip>
-                    <ToolTip Content="Ctrl + V"/>
+                    <ToolTip Content="Ctrl + V" />
                 </Button.ToolTip>
             </Button>
         </ToolBar>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="4"/>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="3*" />
+                <RowDefinition Height="4" />
+                <RowDefinition Height="2*" />
             </Grid.RowDefinitions>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="35" />
                 </Grid.RowDefinitions>
-                <avalonEdit:TextEditor
-                                       ShowLineNumbers="True"
-                                       xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
-                                       Name="TextEditor"
-                                       SyntaxHighlighting="Python"
-                                       FontFamily="Consolas" />
+                <avalonedit:TextEditor
+                    ShowLineNumbers="True"
+                    Name="TextEditor"
+                    SyntaxHighlighting="Python"
+                    FontFamily="Consolas" />
                 <DockPanel Grid.Row="1" VerticalAlignment="Bottom" Height="35">
-                    <Label Content="{Binding CurrentFilePath}" MinWidth="90" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label Content="{Binding CurrentFilePath}" MinWidth="90" HorizontalAlignment="Center"
+                           VerticalContentAlignment="Center" />
                 </DockPanel>
             </Grid>
 
-            <GridSplitter Grid.Row="1" Height="4" HorizontalAlignment="Stretch"/>
+            <GridSplitter Grid.Row="1" Height="4" HorizontalAlignment="Stretch" />
             <Grid Grid.Row="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="20" />
                 </Grid.RowDefinitions>
-                <TabControl >
-                    <TabItem Header="{DynamicResource m_OutputWindow}">
-                        <TextBox Name="OutputText" Padding="3"
+                <TabControl>
+                    <TabItem Header="{DynamicResource m_Scanner}">
+                        <DataGrid x:Name="lexerDataGrid" EnableRowVirtualization="False" Margin="5"
+                                  SelectedItem="{Binding SelectedLexeme}" ItemsSource="{Binding Lexemes, Mode=OneWay}"
+                                  AlternationCount="{Binding Lexemes.Count}" GridLinesVisibility="All"
+                                  AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="{DynamicResource m_Position}"
+                                                    Binding="{Binding Location, Mode=OneWay}"
+                                                    DisplayIndex="0" />
+                                <DataGridTextColumn Header="{DynamicResource m_LexemeCode}"
+                                                    Binding="{Binding LexemeId, Mode=OneWay}"
+                                                    DisplayIndex="1" />
+                                <DataGridTextColumn Header="{DynamicResource m_LexemeCodeName}"
+                                                    Binding="{Binding LexemeName, Mode=OneWay}"
+                                                    DisplayIndex="2" />
+                                <DataGridTextColumn Header="{DynamicResource m_Lexeme}"
+                                                    Binding="{Binding Value, Mode=OneWay}"
+                                                    DisplayIndex="3" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </TabItem>
+                    <TabItem Header="{DynamicResource m_Parser}">
+                        <TextBox Name="ParserTab" Padding="3"
                                  Text="{DynamicResource m_IDEWasLaunchedSucc}"
                                  AcceptsReturn="True"
                                  FontSize="{Binding FontSize, ElementName=TextEditor, Mode=OneWay}"
@@ -142,22 +161,12 @@
                                  HorizontalScrollBarVisibility="Auto"
                                  IsReadOnly="True" />
                     </TabItem>
-                    <TabItem Header="{DynamicResource m_Errors}">
-                        <DataGrid Name="ErrorsDataGrid" IsReadOnly="True"
-                                  AutoGenerateColumns="False">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="N" Binding="{Binding Id}" />
-                                <DataGridTextColumn Header="File Path" Binding="{Binding FilePath}" />
-                                <DataGridTextColumn Header="Line" Binding="{Binding Line}" />
-                                <DataGridTextColumn Header="Column" Binding="{Binding Column}" />
-                                <DataGridTextColumn Header="Message" Binding="{Binding Message}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </TabItem>
                 </TabControl>
                 <DockPanel Grid.Row="1" VerticalAlignment="Bottom" Height="20">
-                    <Label Content="{DynamicResource m_IDEErrorsDoesnotFound}" MinWidth="90" HorizontalAlignment="Right" VerticalContentAlignment="Center"/>
-                    <TextBlock Name="CurrentTime" Text="{Binding CurrentTime}" HorizontalAlignment="Right" Padding="0,3,15,0"/>
+                    <Label Content="{DynamicResource m_IDEWasLaunchedSucc}" MinWidth="90"
+                           HorizontalAlignment="Right" VerticalContentAlignment="Center" />
+                    <TextBlock Name="CurrentTime" Text="{Binding CurrentTime}" HorizontalAlignment="Right"
+                               Padding="0,3,15,0" />
                 </DockPanel>
             </Grid>
         </Grid>

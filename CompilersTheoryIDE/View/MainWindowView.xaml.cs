@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Threading;
 using CompilersTheoryIDE.ViewModel;
 using Microsoft.Win32;
 
@@ -16,19 +13,18 @@ namespace CompilersTheoryIDE.View;
 public partial class MainWindowView : Window
 {
     private bool _isTextChanged;
-    private MainWindowViewModel _viewModel;
+    private readonly MainWindowViewModel _viewModel;
 
     public MainWindowView()
     {
         InitializeComponent();
         _viewModel = new MainWindowViewModel();
         DataContext = _viewModel;
-        CreateMockupErrors();
         SetupEventHandlers();
-        
+
         App.LanguageChanged += LanguageChanged;
 
-        CultureInfo currLang = App.Language;
+        var currLang = App.Language;
 
         //Заполняем меню смены языка:
         menuLanguage.Items.Clear();
@@ -44,7 +40,7 @@ public partial class MainWindowView : Window
             menuLanguage.Items.Add(menuLang);
         }
     }
-    
+
     private void LanguageChanged(object sender, EventArgs e)
     {
         var currLang = App.Language;
@@ -62,7 +58,7 @@ public partial class MainWindowView : Window
         if (sender is not MenuItem mi) return;
         if (mi.Tag is CultureInfo lang) App.Language = lang;
     }
-    
+
     // Sets up event handlers for UI elements.
     private void SetupEventHandlers()
     {
@@ -76,41 +72,10 @@ public partial class MainWindowView : Window
         var files = (string[])e.Data.GetData(DataFormats.FileDrop);
         if (files.Length <= 0) return;
         var filePath = files[0];
-        if (!Path.GetExtension(filePath).Equals(".orangutan", StringComparison.InvariantCultureIgnoreCase)) 
+        if (!Path.GetExtension(filePath).Equals(".orangutan", StringComparison.InvariantCultureIgnoreCase))
             return;
         if (SaveFileCheckIsInterrupted()) return;
         OpenAndProcessFile(filePath);
-    }
-    
-    public class Error
-    {
-        public Error(int id, string filePath, int line, int column, string message)
-        {
-            FilePath = filePath;
-            Message = message;
-            Line = line;
-            Column = column;
-            Id = id;
-        }
-        
-        public int Id { get; set; }
-        public string FilePath { get; set; }
-        public int Line { get; set; }
-        public int Column { get; set; }
-        public string Message { get; set; }
-    }
-
-    private void CreateMockupErrors()
-    {
-        var errors = new List<Error>
-        {
-            new(1, "MainWindow.xaml", 12, 15,
-                "The property 'Text' is set more than once."),
-            new(2, "MainWindow.xaml.cs", 17, 21,
-                "The name 'button1' does not exist in the current context.")
-        };
-
-        ErrorsDataGrid.ItemsSource = errors;
     }
 
     private bool SaveFileCheckIsInterrupted()
@@ -136,7 +101,7 @@ public partial class MainWindowView : Window
 
     private int CheckIfTextWasChanged()
     {
-        if (!_isTextChanged) return 0; 
+        if (!_isTextChanged) return 0;
         var result = MessageBox.Show("Сохранить изменения в файле?",
             "Сохранение", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
 
@@ -193,19 +158,40 @@ public partial class MainWindowView : Window
         Clipboard.SetText(selectedText);
     }
 
-    private void PasteText_Click(object sender, RoutedEventArgs e) => TextEditor.Paste();
+    private void PasteText_Click(object sender, RoutedEventArgs e)
+    {
+        TextEditor.Paste();
+    }
 
-    private void CutText_Click(object sender, RoutedEventArgs e) => TextEditor.Cut();
+    private void CutText_Click(object sender, RoutedEventArgs e)
+    {
+        TextEditor.Cut();
+    }
 
-    private void DeleteText_Click(object sender, RoutedEventArgs e) => TextEditor.Delete();
+    private void DeleteText_Click(object sender, RoutedEventArgs e)
+    {
+        TextEditor.Delete();
+    }
 
-    private void SelectAllText_Click(object sender, RoutedEventArgs e) => TextEditor.SelectAll();
+    private void SelectAllText_Click(object sender, RoutedEventArgs e)
+    {
+        TextEditor.SelectAll();
+    }
 
-    private void UndoText_Click(object sender, RoutedEventArgs e) => TextEditor.Undo();
+    private void UndoText_Click(object sender, RoutedEventArgs e)
+    {
+        TextEditor.Undo();
+    }
 
-    private void RedoText_Click(object sender, RoutedEventArgs e) => TextEditor.Redo();
-    
-    private void SaveAs_Click(object sender, RoutedEventArgs e) => SaveFile();
+    private void RedoText_Click(object sender, RoutedEventArgs e)
+    {
+        TextEditor.Redo();
+    }
+
+    private void SaveAs_Click(object sender, RoutedEventArgs e)
+    {
+        SaveFile();
+    }
 
     private void SaveFile_Click(object sender, RoutedEventArgs e)
     {
@@ -225,16 +211,16 @@ public partial class MainWindowView : Window
 
     private void GetHelp_Click(object sender, RoutedEventArgs e)
     {
-        string? helpFunctions = TryFindResource("m_HelpWindowContent") as string;
-        MessageBox.Show(helpFunctions, TryFindResource("m_Help") as string, 
+        var helpFunctions = TryFindResource("m_HelpWindowContent") as string;
+        MessageBox.Show(helpFunctions, TryFindResource("m_Help") as string,
             MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     private void GetAbout_Click(object sender, RoutedEventArgs e)
     {
-        string? about = TryFindResource("m_AboutWindowContent") as string;
+        var about = TryFindResource("m_AboutWindowContent") as string;
         about += Assembly.GetExecutingAssembly().GetName().Version;
-        MessageBox.Show(about, 
+        MessageBox.Show(about,
             TryFindResource("m_GetAbout") as string);
     }
 }
