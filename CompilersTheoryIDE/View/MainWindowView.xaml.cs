@@ -1,17 +1,21 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using CompilersTheoryIDE.Model;
 using CompilersTheoryIDE.ViewModel;
 using Microsoft.Win32;
 
 namespace CompilersTheoryIDE.View;
 
-public partial class MainWindowView : Window
+public partial class MainWindowView
 {
+    private readonly LexicalScanner _lexicalScanner;
     private bool _isTextChanged;
     private readonly MainWindowViewModel _viewModel;
 
@@ -20,33 +24,50 @@ public partial class MainWindowView : Window
         InitializeComponent();
         _viewModel = new MainWindowViewModel();
         DataContext = _viewModel;
+        _lexicalScanner = new LexicalScanner();
         SetupEventHandlers();
+        // Handle the SelectionChanged event of the DataGrid
+        LexemeDataGrid.SelectionChanged += LexemeDataGrid_SelectionChanged;
 
         App.LanguageChanged += LanguageChanged;
 
         var currLang = App.Language;
 
         //Заполняем меню смены языка:
-        menuLanguage.Items.Clear();
-        foreach (var lang in App.Languages)
+        MenuLanguage.Items.Clear();
+        foreach (var menuLang in App.Languages.Select(lang => new MenuItem
+                 {
+                     Header = lang.DisplayName,
+                     Tag = lang,
+                     IsChecked = lang.Equals(currLang)
+                 }))
         {
-            var menuLang = new MenuItem
-            {
-                Header = lang.DisplayName,
-                Tag = lang,
-                IsChecked = lang.Equals(currLang)
-            };
             menuLang.Click += ChangeLanguageClick;
-            menuLanguage.Items.Add(menuLang);
+            MenuLanguage.Items.Add(menuLang);
         }
     }
+    
+    private void LexemeDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (LexemeDataGrid.SelectedItem is not Lexeme selectedLexeme) 
+            return;
+        
+        // Calculate the text range that needs to be selected in the TextEditor
+        var selectionStart = selectedLexeme.IndexStart;
+        var selectionLength = selectedLexeme.IndexEnd - selectedLexeme.IndexStart + 1;
 
-    private void LanguageChanged(object sender, EventArgs e)
+        // Set the SelectionStart and SelectionLength properties of the TextEditor
+        TextEditor.SelectionLength = 0;
+        TextEditor.SelectionStart = selectionStart;
+        TextEditor.SelectionLength = selectionLength;
+    }
+    
+    private void LanguageChanged(object? sender, EventArgs e)
     {
         var currLang = App.Language;
 
         //Отмечаем нужный пункт смены языка как выбранный язык
-        foreach (MenuItem i in menuLanguage.Items)
+        foreach (MenuItem i in MenuLanguage.Items)
         {
             var ci = i.Tag as CultureInfo;
             i.IsChecked = ci != null && ci.Equals(currLang);
@@ -77,6 +98,9 @@ public partial class MainWindowView : Window
         if (SaveFileCheckIsInterrupted()) return;
         OpenAndProcessFile(filePath);
     }
+    
+    private void StartScanner_Click(object sender, RoutedEventArgs e) => 
+        _viewModel.Lexemes = new ObservableCollection<Lexeme>(_lexicalScanner.Analyze(TextEditor.Text));
 
     private bool SaveFileCheckIsInterrupted()
     {
@@ -96,7 +120,7 @@ public partial class MainWindowView : Window
     {
         TextEditor.Load(filePath);
         _isTextChanged = false; // Reset flag as we just loaded a new file
-        CurrentFilePath = filePath;
+        _viewModel.CurrentFilePath = filePath;
     }
 
     private int CheckIfTextWasChanged()
@@ -195,10 +219,10 @@ public partial class MainWindowView : Window
 
     private void SaveFile_Click(object sender, RoutedEventArgs e)
     {
-        if (string.IsNullOrEmpty(_currentFilePath))
+        if (string.IsNullOrEmpty(_viewModel.CurrentFilePath))
             SaveAs_Click(sender, e);
         else
-            TextEditor.Save(_currentFilePath);
+            TextEditor.Save(_viewModel.CurrentFilePath);
     }
 
     private void SaveFile()
@@ -206,7 +230,7 @@ public partial class MainWindowView : Window
         var saveFileDialog = new SaveFileDialog { Filter = "Orangutan files (*.orangutan)|*.orangutan" };
         if (saveFileDialog.ShowDialog() != true) return;
         TextEditor.Save(saveFileDialog.FileName);
-        _currentFilePath = saveFileDialog.FileName;
+        _viewModel.CurrentFilePath = saveFileDialog.FileName;
     }
 
     private void GetHelp_Click(object sender, RoutedEventArgs e)
@@ -223,26 +247,9 @@ public partial class MainWindowView : Window
         MessageBox.Show(about,
             TryFindResource("m_GetAbout") as string);
     }
-}
 
-public partial class MainWindowView : INotifyPropertyChanged
-{
-    private string _currentFilePath = "Новый документ";
-
-    public string CurrentFilePath
+    private void TestExample_Click(object sender, RoutedEventArgs e)
     {
-        get => _currentFilePath;
-        set
-        {
-            _currentFilePath = value;
-            OnPropertyChanged(nameof(CurrentFilePath));
-        }
-    }
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-
-    private void OnPropertyChanged(string propertyName)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        TextEditor.Text = "Hello # 123''[]\"\"\"\n\nWorld'''\nGenre\n'''error # correct \n #";
     }
 }

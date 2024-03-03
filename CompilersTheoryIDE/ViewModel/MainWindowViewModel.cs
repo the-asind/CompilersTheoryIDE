@@ -1,7 +1,9 @@
 using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 using System.Windows.Threading;
+using CompilersTheoryIDE.Model;
 
 namespace CompilersTheoryIDE.ViewModel;
 
@@ -24,6 +26,41 @@ public class MainWindowViewModel : INotifyPropertyChanged
         {
             _currentTime = value;
             OnPropertyChanged(nameof(CurrentTime));
+        }
+    }
+    
+    private string _currentFilePath = "Новый документ";
+
+    public string CurrentFilePath
+    {
+        get => _currentFilePath;
+        set
+        {
+            _currentFilePath = value;
+            OnPropertyChanged(nameof(CurrentFilePath));
+        }
+    }
+    
+    private ObservableCollection<Lexeme> _lexemes;
+    private Lexeme _selectedLexeme;
+
+    public ObservableCollection<Lexeme> Lexemes
+    {
+        get => _lexemes;
+        set
+        {
+            _lexemes = value;
+            OnPropertyChanged(nameof(Lexemes));
+        }
+    }
+
+    public Lexeme SelectedLexeme
+    {
+        get => _selectedLexeme;
+        set
+        {
+            _selectedLexeme = value;
+            OnPropertyChanged(nameof(SelectedLexeme));
         }
     }
 

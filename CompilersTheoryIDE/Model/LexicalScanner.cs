@@ -5,81 +5,47 @@ namespace CompilersTheoryIDE.Model;
 
 public class LexicalScanner
 {
-    public List<Lexeme> Lexemes { get; private set; } = new List<Lexeme>();
+    private List<Lexeme> Lexemes { get; } = new();
     
     // Analyzes the input string to identify lexemes. Returns a list of Lexeme objects.
     public List<Lexeme> Analyze(string input)
     {
         Lexemes.Clear();
-        int currentPosition = 0;
-
-        while (currentPosition < input.Length)
+        var i = 0;
+        while (i < input.Length)
         {
-            if (IsSingleLineCommentStart(input, currentPosition))
+            var value = string.Empty + input[i];
+
+            if (input[i] == '#')
+                Lexemes.Add(new Lexeme(value, i, i, LexemeType.SingleLineComment));
+            else if (value == "\n")
+                Lexemes.Add(new Lexeme("\\n", i, i, LexemeType.NewLine));
+            else if (input.Skip(i).Take(3).SequenceEqual("\"\"\""))
             {
-                AddLexeme(input, currentPosition, currentPosition, LexemeType.SingleLineComment);
+                Lexemes.Add(new Lexeme("\"\"\"", i, i + 2, LexemeType.MultiLineDoubleQuotesComment));
+                i += 2;
             }
-            else if (IsNewLine(input[currentPosition]))
+            else if (input.Skip(i).Take(3).SequenceEqual("'''"))
             {
-                AddLexeme(input, currentPosition, currentPosition, LexemeType.NewLine);
-            }
-            else if (IsMultiLineDoubleQuotesCommentStart(input, currentPosition))
-            {
-                AddLexeme(input, currentPosition, currentPosition + 2, LexemeType.MultiLineDoubleQuotesComment);
-                currentPosition += 2;
-            }
-            else if (IsMultiLineSingleQuotesCommentStart(input, currentPosition))
-            {
-                AddLexeme(input, currentPosition, currentPosition + 2, LexemeType.MultiLineSingleQuotesComment);
-                currentPosition += 2;
+                Lexemes.Add(new Lexeme("'''", i, i + 2, LexemeType.MultiLineSingleQuotesComment));
+                i += 2;
             }
             else
             {
-                currentPosition = HandleSymbolSequence(input, currentPosition);
+                var j = i + 1;
+                while (j < input.Length && input[j] != '#' && input[j] != '\n' && 
+                       !input.Skip(j).Take(3).SequenceEqual("\"\"\"") && !input.Skip(j).Take(3).SequenceEqual("'''"))
+                {
+                    value += input[j];
+                    j++;
+                }
+                Lexemes.Add(new Lexeme(value, i, j - 1, LexemeType.SymbolSequence));
+                i = j - 1;
             }
 
-            currentPosition++;
+            i++;
         }
 
         return Lexemes;
-    }
-
-    private void AddLexeme(string input, int start, int end, LexemeType type)
-    {
-        string value = input.Substring(start, end - start + 1);
-        Lexemes.Add(new Lexeme(value, start, end, type));
-    }
-
-    private int HandleSymbolSequence(string input, int start)
-    {
-        int end = start;
-
-        while (end < input.Length && !IsSingleLineCommentStart(input, end) && !IsNewLine(input[end]) && !IsMultiLineDoubleQuotesCommentStart(input, end) && !IsMultiLineSingleQuotesCommentStart(input, end))
-        {
-            end++;
-        }
-
-        AddLexeme(input, start, end - 1, LexemeType.SymbolSequence);
-        return end - 1;
-    }
-
-    private bool IsSingleLineCommentStart(string input, int position)
-    {
-        return input[position] == '#';
-    }
-
-    private bool IsNewLine(char character)
-    {
-        return character == '\n';
-    }
-
-    private bool IsMultiLineDoubleQuotesCommentStart(string input, int position)
-    {
-        return position + 2 < input.Length && input.Substring(position, 3) == "\"\"\"";
-    }
-
-    private bool IsMultiLineSingleQuotesCommentStart(string input, int position)
-    {
-        return position + 2 < input.Length && input.Substring(position, 3) == "'''";
     }
 }

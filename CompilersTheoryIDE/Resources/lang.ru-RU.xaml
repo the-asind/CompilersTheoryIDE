@@ -35,6 +35,7 @@
     <v:String x:Key="m_Start">Старт</v:String>
     <v:String x:Key="m_Help">Помощь</v:String>
     <v:String x:Key="m_GetHelp">Cправка</v:String>
+    <v:String x:Key="m_Localization">Локализация</v:String>
     <v:String x:Key="m_GetAbout">О программе</v:String>
 
     <v:String x:Key="m_LexemeCode">Число</v:String>
@@ -51,7 +52,7 @@
 
     <v:String x:Key="m_OutputWindow">Окно вывода</v:String>
     <v:String x:Key="m_Parser">Парсер</v:String>
-    <v:String x:Key="m_Scanner">Сканнер Window</v:String>
+    <v:String x:Key="m_Scanner">Сканнер</v:String>
     <v:String x:Key="m_Errors">Ошибки</v:String>
 
     <v:String x:Key="m_IDEErrorsDoesnotFound">IDE не нашло никаких ошибок</v:String>
@@ -72,6 +73,6 @@
         Выделить все: Выделяет весь текст или элементы в текущем окне или документе.
     </v:String>
 
-    <v:String x:Key="AboutWindowContent">IDE Orangutan. Версия: </v:String>
+    <v:String x:Key="m_AboutWindowContent">IDE Orangutan. Версия: </v:String>
 
 </ResourceDictionary>
