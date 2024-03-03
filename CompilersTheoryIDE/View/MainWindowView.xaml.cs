@@ -85,6 +85,7 @@ public partial class MainWindowView
     {
         Drop += MainWindow_Drop;
         Closing += WindowClosing;
+        TextEditor.TextChanged += TextEditor_TextChanged;
     }
 
     private void MainWindow_Drop(object sender, DragEventArgs e)
@@ -100,6 +101,9 @@ public partial class MainWindowView
     }
     
     private void StartScanner_Click(object sender, RoutedEventArgs e) => 
+        _viewModel.Lexemes = new ObservableCollection<Lexeme>(_lexicalScanner.Analyze(TextEditor.Text));
+    
+    private void TextEditor_TextChanged(object? sender, EventArgs eventArgs) => 
         _viewModel.Lexemes = new ObservableCollection<Lexeme>(_lexicalScanner.Analyze(TextEditor.Text));
 
     private bool SaveFileCheckIsInterrupted()
