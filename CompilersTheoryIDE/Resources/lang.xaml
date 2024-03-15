@@ -77,6 +77,9 @@
     <v:String x:Key="m_Localization">Localization</v:String>
     <v:String x:Key="m_English">English, en-US</v:String>
     <v:String x:Key="m_Russian">Russian, ru-RU</v:String>
-
+    
+    <v:String x:Key="m_Fragment">Fragment</v:String>
+    <v:String x:Key="m_ErrorCodeName">Error</v:String>
+    
 
 </ResourceDictionary>

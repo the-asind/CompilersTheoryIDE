@@ -63,6 +63,24 @@ public class MainWindowViewModel : INotifyPropertyChanged
             OnPropertyChanged(nameof(SelectedLexeme));
         }
     }
+    
+    private ObservableCollection<ParserError> _parserGrid;
+
+    public ObservableCollection<ParserError> ParserGrid
+    {
+        get => _parserGrid;
+        set
+        {
+            _parserGrid = value;
+            OnPropertyChanged(nameof(ParserGrid));
+        }
+    }
+
+    public void ParseTokens(ObservableCollection<Lexeme> tokens)
+    {
+        Parser parser = new Parser();
+        ParserGrid = new ObservableCollection<ParserError>(parser.Parse(tokens));
+    }
 
     public event PropertyChangedEventHandler? PropertyChanged;
 

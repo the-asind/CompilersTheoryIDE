@@ -14,14 +14,14 @@ public enum LexemeType
 public class Lexeme
 {
     public int LexemeId => (int)Type;
-    public string LexemeName => lexemeNames[LexemeId - 1];
+    public string LexemeName => _lexemeNames[LexemeId - 1];
     public string Value { get; set; }
     public int IndexStart { get; set; }
     public int IndexEnd { get; set; }
     public LexemeType Type { get; set; }
     public string Location => $"{IndexStart};{IndexEnd}";
     
-    private List<string> lexemeNames;
+    private List<string> _lexemeNames;
     
     public Lexeme(string value, int positionStart, int positionEnd, LexemeType type)
     {
@@ -30,7 +30,7 @@ public class Lexeme
         IndexEnd = positionEnd;
         Type = type;
         
-        lexemeNames = new List<string>
+        _lexemeNames = new List<string>
         {
             "m_SingleLineComment",
             "m_MultiLineDoubleQuotesComment",

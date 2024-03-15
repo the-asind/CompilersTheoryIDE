@@ -99,13 +99,19 @@ public partial class MainWindowView
         if (SaveFileCheckIsInterrupted()) return;
         OpenAndProcessFile(filePath);
     }
-    
-    private void StartScanner_Click(object sender, RoutedEventArgs e) => 
-        _viewModel.Lexemes = new ObservableCollection<Lexeme>(_lexicalScanner.Analyze(TextEditor.Text));
-    
-    private void TextEditor_TextChanged(object? sender, EventArgs eventArgs) => 
-        _viewModel.Lexemes = new ObservableCollection<Lexeme>(_lexicalScanner.Analyze(TextEditor.Text));
 
+    private void StartScanner_Click(object sender, RoutedEventArgs e) =>
+        TextEditor_TextChanged(sender, e);
+
+    private void TextEditor_TextChanged(object? sender, EventArgs eventArgs)
+    {
+        var tokens = new ObservableCollection<Lexeme>(_lexicalScanner.Analyze(TextEditor.Text));
+        _viewModel.Lexemes = tokens;
+        
+        // Parse the tokens and update the ParserGrid
+        _viewModel.ParseTokens(tokens);
+    }
+    
     private bool SaveFileCheckIsInterrupted()
     {
         switch (CheckIfTextWasChanged())

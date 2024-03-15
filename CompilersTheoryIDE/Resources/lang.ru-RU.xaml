@@ -38,10 +38,10 @@
     <v:String x:Key="m_Localization">Локализация</v:String>
     <v:String x:Key="m_GetAbout">О программе</v:String>
 
-    <v:String x:Key="m_LexemeCode">Число</v:String>
+    <v:String x:Key="m_LexemeCode">Номер</v:String>
     <v:String x:Key="m_LexemeCodeName">Тип</v:String>
     <v:String x:Key="m_Lexeme">Лексема</v:String>
-    <v:String x:Key="m_Position">Расположение</v:String>
+    <v:String x:Key="m_Position">Место</v:String>
     <v:String x:Key="m_End">Конец</v:String>
     
     <v:String x:Key="m_SingleLineComment">Однострочный комментарий</v:String>
@@ -74,5 +74,10 @@
     </v:String>
 
     <v:String x:Key="m_AboutWindowContent">IDE Orangutan. Версия: </v:String>
+    
+    <v:String x:Key="m_Fragment">Фрагмент</v:String>
+    <v:String x:Key="m_ErrorCodeName">Ошибка</v:String>
+
+
 
 </ResourceDictionary>

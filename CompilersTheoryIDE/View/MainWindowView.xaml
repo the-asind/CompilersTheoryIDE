@@ -112,9 +112,9 @@
         </ToolBar>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="3*" />
-                <RowDefinition Height="4" />
                 <RowDefinition Height="2*" />
+                <RowDefinition Height="4" />
+                <RowDefinition Height="3*" />
             </Grid.RowDefinitions>
             <Grid>
                 <Grid.RowDefinitions>
@@ -162,13 +162,22 @@
                         </DataGrid>
                     </TabItem>
                     <TabItem Header="{DynamicResource m_Parser}">
-                        <TextBox Name="ParserTab" Padding="3"
-                                 Text="{DynamicResource m_IDEWasLaunchedSucc}"
-                                 AcceptsReturn="True"
-                                 FontSize="{Binding FontSize, ElementName=TextEditor, Mode=OneWay}"
-                                 VerticalScrollBarVisibility="Auto"
-                                 HorizontalScrollBarVisibility="Auto"
-                                 IsReadOnly="True" />
+                        <DataGrid EnableRowVirtualization="False" Margin="5" Name="ParserDataGrid"
+                                  SelectedItem="{Binding SelectedLexeme}" ItemsSource="{Binding ParserGrid, Mode=OneWay}"
+                                  AlternationCount="{Binding ParserGrid.Count}" GridLinesVisibility="All"
+                                  AutoGenerateColumns="False" SelectionMode="Single">
+                            <DataGrid.Columns >
+                                <DataGridTextColumn Header="{DynamicResource m_Position}"
+                                                    Binding="{Binding ErrorLocation, Mode=OneWay}"
+                                                    DisplayIndex="0" />
+                                <DataGridTextColumn Header="{DynamicResource m_ErrorCodeName}"
+                                                    Binding="{Binding ErrorName, Mode=OneWay, Converter={StaticResource DynamicResourceBindingConverter}}"
+                                                    DisplayIndex="1" />
+                                <DataGridTextColumn Header="{DynamicResource m_Fragment}"
+                                                    Binding="{Binding ErrorFragment, Mode=OneWay}"
+                                                    DisplayIndex="2" />
+                            </DataGrid.Columns>
+                        </DataGrid>
                     </TabItem>
                 </TabControl>
                 <DockPanel Grid.Row="1" VerticalAlignment="Bottom" Height="20">
