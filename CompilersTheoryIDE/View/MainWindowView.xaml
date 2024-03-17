@@ -183,7 +183,8 @@
                 <DockPanel Grid.Row="1" VerticalAlignment="Bottom" Height="20">
                     <Label Content="{DynamicResource m_IDEWasLaunchedSucc}" MinWidth="90"
                            HorizontalAlignment="Right" VerticalContentAlignment="Center" />
-                    <TextBlock Name="CurrentTime" Text="{Binding CurrentTime}" HorizontalAlignment="Right"
+                    <TextBlock Text="{Binding ErrorsCount}" VerticalAlignment="Center" />
+                    <TextBlock Text="{Binding CurrentTime}" HorizontalAlignment="Right"
                                Padding="0,3,15,0" />
                 </DockPanel>
             </Grid>

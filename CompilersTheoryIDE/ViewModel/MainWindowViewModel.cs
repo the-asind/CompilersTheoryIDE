@@ -1,6 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 using System.Windows.Threading;
 using CompilersTheoryIDE.Model;
@@ -11,6 +12,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
 {
     // Time display formatting
     private string _currentTime;
+    private int _errorsCount = 0;
     private DispatcherTimer _timer;
 
     // Constructor
@@ -26,6 +28,16 @@ public class MainWindowViewModel : INotifyPropertyChanged
         {
             _currentTime = value;
             OnPropertyChanged(nameof(CurrentTime));
+        }
+    }
+    
+    public string ErrorsCount
+    {
+        get => _errorsCount.ToString();
+        private set
+        {
+            _errorsCount = int.Parse(value);
+            OnPropertyChanged(nameof(ErrorsCount));
         }
     }
     
@@ -79,7 +91,9 @@ public class MainWindowViewModel : INotifyPropertyChanged
     public void ParseTokens(ObservableCollection<Lexeme> tokens)
     {
         Parser parser = new Parser();
-        ParserGrid = new ObservableCollection<ParserError>(parser.Parse(tokens));
+        var errors = parser.Parse(tokens);
+        ParserGrid = new ObservableCollection<ParserError>(errors);
+        ErrorsCount = ParserGrid.Count.ToString();
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -96,7 +110,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
     }
 
     // Handles the timer's tick event.
-    private void TimerTick(object sender, EventArgs e)
+    private void TimerTick(object? sender, EventArgs e)
     {
         CurrentTime = DateTime.Now.ToString("H:mm:ss");
         CommandManager.InvalidateRequerySuggested();

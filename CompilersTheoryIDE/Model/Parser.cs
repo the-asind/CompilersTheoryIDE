@@ -22,8 +22,7 @@ public class Parser
 
         foreach (var token in tokens)
         {
-            _currentLine += token.Value.Count(c => c == '\n');
-            _currentPosition = token.Value.Length - token.Value.LastIndexOf('\n');
+            _currentPosition = token.Value.Length;
             switch (currentState)
             {
                 case ParserState.Default:
@@ -44,7 +43,7 @@ public class Parser
                             yield return new ParserError
                             {
                                 ErrorLocation = 
-                                    $"{token.IndexStart+_currentLine}-{token.IndexStart+_currentPosition}",
+                                    $"{token.IndexStart}-{token.IndexStart+_currentPosition}",
                                 ErrorName = "Unexpected Symbol Sequence",
                                 ErrorFragment = token.Value
                             };
@@ -99,13 +98,13 @@ public class Parser
                     break;
             }
         }
-
+        
         // Check for unclosed comments at the end
-        if (currentState != ParserState.Default)
+        if (currentState != ParserState.Default && currentState != ParserState.SingleLineComment)
             yield return new ParserError
             {
                 ErrorLocation = "End of file",
-                ErrorName = $"Unclosed {currentState} comment",
+                ErrorName = $"Unclosed {currentState}",
                 ErrorFragment = null
             };
     }
