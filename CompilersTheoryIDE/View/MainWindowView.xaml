@@ -63,7 +63,7 @@
                     </MenuItem.HeaderTemplate>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="{DynamicResource m_Start}" Click="StartScanner_Click" />
+            <MenuItem Header="{DynamicResource m_Fix}" Click="FixErrors_Click" />
             <MenuItem Header="{DynamicResource m_Help}">
                 <MenuItem Header="{DynamicResource m_GetHelp}" Click="GetHelp_Click" />
                 <MenuItem Header="{DynamicResource m_GetAbout}" Click="GetAbout_Click" />

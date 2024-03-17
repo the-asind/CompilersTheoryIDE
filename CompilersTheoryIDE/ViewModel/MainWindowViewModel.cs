@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -38,6 +39,39 @@ public class MainWindowViewModel : INotifyPropertyChanged
         {
             _errorsCount = int.Parse(value);
             OnPropertyChanged(nameof(ErrorsCount));
+        }
+    }
+    
+    public IEnumerable<(string, int, string)> NeutralizeErrors()
+    {
+        foreach (var error in ParserGrid)
+        {
+            switch (error.ErrorName)
+            {
+                case "Unclosed MultiLineDoubleQuotesComment":
+                {
+                    // Add """ at the error location
+                    var errorLocation = int.Parse(error.ErrorLocation!.Split('-')[1]);
+                    yield return ("insert", errorLocation, "\"\"\"");
+                    break;
+                }
+                case "Unclosed MultiLineSingleQuotesComment":
+                {
+                    // Add ''' at the error location
+                    var errorLocation = int.Parse(error.ErrorLocation!.Split('-')[1]);
+                    yield return ("insert", errorLocation, "'''");
+                    break;
+                }
+                case "Unexpected Symbol Sequence":
+                {
+                    // Remove the unexpected symbols
+                    var errorStart = int.Parse(error.ErrorLocation!.Split('-')[0]);
+                    var errorEnd = int.Parse(error.ErrorLocation.Split('-')[1]);
+                    var length = errorEnd - errorStart;
+                    yield return ("remove", errorStart, length.ToString());
+                    break;
+                }
+            }
         }
     }
     
@@ -88,9 +122,9 @@ public class MainWindowViewModel : INotifyPropertyChanged
         }
     }
 
-    public void ParseTokens(ObservableCollection<Lexeme> tokens)
+    public void ParseTokens(IEnumerable<Lexeme> tokens)
     {
-        Parser parser = new Parser();
+        var parser = new Parser();
         var errors = parser.Parse(tokens);
         ParserGrid = new ObservableCollection<ParserError>(errors);
         ErrorsCount = ParserGrid.Count.ToString();

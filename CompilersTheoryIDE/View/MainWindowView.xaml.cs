@@ -45,6 +45,9 @@ public partial class MainWindowView
             menuLang.Click += ChangeLanguageClick;
             MenuLanguage.Items.Add(menuLang);
         }
+        
+        _viewModel.Lexemes = new ObservableCollection<Lexeme>();
+        _viewModel.ParseTokens(new ObservableCollection<Lexeme>());
     }
     
     private void LexemeDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -100,8 +103,25 @@ public partial class MainWindowView
         OpenAndProcessFile(filePath);
     }
 
-    private void StartScanner_Click(object sender, RoutedEventArgs e) =>
-        TextEditor_TextChanged(sender, e);
+    private void FixErrors_Click(object sender, RoutedEventArgs e)
+    {
+        var removeOffset = 0;
+        foreach (var action in _viewModel.NeutralizeErrors())
+        {
+            switch (action.Item1)
+            {
+                case "insert":
+                    TextEditor.Text = TextEditor.Text.Insert(action.Item2+removeOffset, action.Item3);
+                    removeOffset += 3;
+                    break;
+                case "remove":
+                    TextEditor.Text = TextEditor.Text.Remove
+                        (action.Item2+removeOffset, int.Parse(action.Item3));
+                    removeOffset -= int.Parse(action.Item3);
+                    break;
+            }
+        }
+    }
 
     private void TextEditor_TextChanged(object? sender, EventArgs eventArgs)
     {

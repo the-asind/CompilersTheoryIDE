@@ -57,6 +57,7 @@
 
     <v:String x:Key="m_IDEErrorsDoesnotFound">IDE не нашло никаких ошибок</v:String>
     <v:String x:Key="m_IDEWasLaunchedSucc">IDE Orangutan запущен успешно. Найдено ошибок: </v:String>
+    <v:String x:Key="m_Fix">Нейтрализовать ошибки</v:String>
 
     <v:String x:Key="m_HelpWindowContent">
         Создать: Создает новый файл или проект.&#x0A;&#x0A;

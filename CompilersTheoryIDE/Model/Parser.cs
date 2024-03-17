@@ -19,9 +19,11 @@ public class Parser
     public IEnumerable<ParserError> Parse(IEnumerable<Lexeme> tokens)
     {
         var currentState = ParserState.Default;
+        Lexeme lastToken = null;
 
         foreach (var token in tokens)
         {
+            lastToken = token;
             _currentPosition = token.Value.Length;
             switch (currentState)
             {
@@ -103,7 +105,8 @@ public class Parser
         if (currentState != ParserState.Default && currentState != ParserState.SingleLineComment)
             yield return new ParserError
             {
-                ErrorLocation = "End of file",
+                ErrorLocation = 
+                    lastToken != null ? $"{lastToken.IndexStart}-{lastToken.IndexStart+_currentPosition}" : "Unknown",
                 ErrorName = $"Unclosed {currentState}",
                 ErrorFragment = null
             };
