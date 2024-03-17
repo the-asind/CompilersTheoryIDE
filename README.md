@@ -111,35 +111,45 @@ _Рис. 11. Простой пример работы выделения тип�
 
 **V<sub>T</sub>** = { ‘#’, ‘"’, ‘'’, newline, symbol}
 
-**V<sub>N</sub>** = { &lt;I&gt;, FIRSTOPENSINGLEQUOTE, FIRSTOPENSINGLEQUOTE, SECONDOPENSINGLEQUOTE, THIRDOPENSINGLEQUOTE, MULTILINESINGLEQUOTESCOMMENT, FIRSTSINGLECLOSEQUOTE, SECONDSINGLECLOSEQUOTE, FIRSTOPENDOUBLEQUOTE, SECONDOPENDOUBLEQUOTE, THIRDOPENDOUBLEQUOTE, MULTILINEDOUBLEQUOTESCOMMENT, FIRSTDOUBLECLOSEQUOTE, SECONDDOUBLECLOSEQUOTE, SHARP, SINGLELINECOMMENT}
+**V<sub>N</sub>** = { &lt;I&gt;, FOSQ, SOSQ, TOSQ, MLSQC, FSCQ, SSCQ, FODQ, SODQ, TODQ, MLDQC, FDCQ, SDCQ, SHARP, SLC}
 
 **P** = 
 {
-- I → ' FIRSTOPENSINGLEQUOTE | " FIRSTOPENDOUBLEQUOTE | # SHARP
-- FIRSTOPENSINGLEQUOTE → ' SECONDOPENSINGLEQUOTE
-- SECONDOPENSINGLEQUOTE → ' THIRDOPENSINGLEQUOTE
-- THIRDOPENSINGLEQUOTE → symbol MULTILINESINGLEQUOTESCOMMENT
-- MULTILINESINGLEQUOTESCOMMENT → symbol MULTILINESINGLEQUOTESCOMMENT | ' FIRSTSINGLECLOSEQUOTE
-- FIRSTSINGLECLOSEQUOTE → ' SECONDSINGLECLOSEQUOTE
-- SECONDSINGLECLOSEQUOTE → '
-- FIRSTOPENDOUBLEQUOTE  → " SECONDOPENDOUBLEQUOTE 
-- SECONDOPENDOUBLEQUOTE → " THIRDOPENDOUBLEQUOTE 
-- THIRDOPENDOUBLEQUOTE → symbol MULTILINEDOUBLEQUOTESCOMMENT 
-- MULTILINEDOUBLEQUOTESCOMMENT -> symbol MULTILINEDOUBLEQUOTESCOMMENT | " FIRSTDOUBLECLOSEQUOTE
-- FIRSTDOUBLECLOSEQUOTE → " SECONDDOUBLECLOSEQUOTE
-- SECONDDOUBLECLOSEQUOTE → "
-- SHARP → symbol SINGLELINECOMMENT
-- SINGLELINECOMMENT → symbol SINGLELINECOMMENT | newline
+- I → ' FOSQ | " FODQ | # SHARP
+- FOSQ → ' SOSQ
+- SOSQ → ' TOSQ
+- TOSQ → symbol MLSQC
+- MLSQC → symbol MLSQC | ' FSCQ
+- FSCQ → ' SSCQ
+- SSCQ → '
+- FODQ  → " SODQ 
+- SODQ → " TODQ 
+- TODQ → symbol MLDQSC 
+- MLDQC -> symbol MLDQC | " FDCQ
+- FDCQ → " SDCQ
+- SDCQ → "
+- SHARP → symbol SLC
+- SLC → symbol SLC | newline
 
 }
+
 
 Грамматика является полностью автоматной, (по классификации Хомского)
 
 ### Граф конечного автомата
 
-![граф конечного автомата](https://github.com/the-asind/CompilersTheoryIDE/assets/84527186/3674f4b6-08ee-4d48-9596-7073d501bf61)
+![граф конечного автомата](https://github.com/the-asind/CompilersTheoryIDE/assets/84527186/c4f0f142-81ba-45a6-885b-6af80be02407)
 
 _Рис. 12. Граф конечного автомата комментариев на Python._
+
+![граф конечного автомата на токенах](https://github.com/the-asind/CompilersTheoryIDE/assets/84527186/40c274f9-2c2d-423e-99c4-e1ba7b9047b3)
+
+_Рис. 12. Недетерминированный граф конечного автомата комментариев на Python, аналогичный работе на токенах._
+
+![image](https://github.com/the-asind/CompilersTheoryIDE/assets/84527186/5999fc72-c3cb-40c0-ad82-329fa73edd77)
+![image](https://github.com/the-asind/CompilersTheoryIDE/assets/84527186/39446272-8add-4125-b30a-f704402cde29)
+
+_Рис. 13(а,б). Примеры работы парсера._
 
 ----
 
