@@ -40,4 +40,11 @@
             <Generator>XamlIntelliSenseFileGenerator</Generator>
         </Page>
     </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Resources\help.html" />
+      <Content Include="Resources\help.html">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
 </Project>

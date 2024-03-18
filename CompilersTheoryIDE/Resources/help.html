@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Тема 51. Комментарии языка Python</title>
+</head>
+<body>
+
+<h1>Тема 51. Комментарии языка Python</h1>
+
+<a name="task"></a>
+<h2>Постановка задачи</h2>
+<p>Тема 51. Комментарии языка Python.</p>
+
+<a name="grammar"></a>
+<h2>Грамматика</h2>
+<pre>
+G [< I >]:
+
+VT = { '#', '"', ''', newline, symbol}
+
+VN = { < I >, FOSQ, SOSQ, TOSQ, MLSQC, FSCQ, SSCQ, FODQ, SODQ, TODQ, MLDQC, FDCQ, SDCQ, SHARP, SLC}
+
+P = {
+
+    I → ' FOSQ | " FODQ | # SHARP
+    FOSQ → ' SOSQ
+    SOSQ → ' TOSQ
+    TOSQ → symbol MLSQC
+    MLSQC → symbol MLSQC | ' FSCQ
+    FSCQ → ' SSCQ
+    SSCQ → '
+    FODQ → " SODQ
+    SODQ → " TODQ
+    TODQ → symbol MLDQSC
+    MLDQC -> symbol MLDQC | " FDCQ
+    FDCQ → " SDCQ
+    SDCQ → "
+    SHARP → symbol SLC
+    SLC → symbol SLC | newline
+
+}
+  </pre>
+
+<a name="classification"></a>
+<h2>Классификация грамматики</h2>
+<p>Грамматика является полностью автоматной, (по классификации Хомского)</p>
+
+<a name="analysis"></a>
+<h2>Метод анализа</h2>
+<p>Метод Айронса</p>
+<p>Разрабатываемый синтаксический анализатор построен на базе автоматной грамматики. При нахождении лексемы, которая не соответствует грамматике предлагается свести алгоритм нейтрализации к последовательному удалению следующего символа во входной цепочке до тех пор, пока следующий символ не окажется одним из допустимых в данный момент разбора.</p>
+<p>Этот алгоритм был мной уже реализован в Лабораторной работе №3. В таблице ошибок выводятся их местоположение и текст ошибки, содержащий информацию об отброшенном фрагменте.</p>
+
+<a name="references"></a>
+<h2>Список литературы</h2>
+<ol>
+    <li>Шорников Ю.В. Теория и практика языковых процессоров : учеб. пособие / Ю.В. Шорников. – Новосибирск: Изд-во НГТУ, 2004.</li>
+    <li>Gries D. Designing Compilers for Digital Computers. New York, Jhon Wiley, 1971. 493 p.</li>
+    <li>Теория формальных языков и компиляторов [Электронный ресурс] / Электрон. дан. URL: https://dispace.edu.nstu.ru/didesk/course/show/8594, свободный. Яз.рус. (дата обращения 01.04.2021).</li>
+</ol>
+
+</body>
+</html>

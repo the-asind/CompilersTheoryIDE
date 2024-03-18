@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -75,6 +76,32 @@ public partial class MainWindowView
             var ci = i.Tag as CultureInfo;
             i.IsChecked = ci != null && ci.Equals(currLang);
         }
+    }
+    
+    private void TaskStatement_Click(object sender, RoutedEventArgs e)
+    {
+        // Путь к HTML-файлу
+        string htmlFilePath = @"Resources\help.html";
+
+        var p = new Process();
+        p.StartInfo = new ProcessStartInfo(htmlFilePath)
+        {
+            UseShellExecute = true
+        };
+        p.Start();
+    }
+    
+    private void SourceCode_Click(object sender, RoutedEventArgs e)
+    {
+        // Путь к HTML-файлу
+        string htmlFilePath = @"https://github.com/the-asind/CompilersTheoryIDE";
+
+        var p = new Process();
+        p.StartInfo = new ProcessStartInfo(htmlFilePath)
+        {
+            UseShellExecute = true
+        };
+        p.Start();
     }
 
     private static void ChangeLanguageClick(object sender, EventArgs e)
