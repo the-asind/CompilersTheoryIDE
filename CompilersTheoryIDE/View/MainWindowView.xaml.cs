@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using Antlr4.Runtime;
@@ -316,24 +317,15 @@ public partial class MainWindowView
 
     private void StartAntlr_Click(object sender, RoutedEventArgs e)
     {
-        try
-        {
-            var input = TextEditor.Text;
-            var inputStream = new AntlrInputStream(input);
-            var lexer = new PythonCommentsLexer(inputStream);
-            var tokenStream = new CommonTokenStream(lexer);
-            var parser = new PythonCommentsParser(tokenStream);
-            var tree = parser.file();
-            var visitor = new PythonCommentsBaseVisitor<string>();
-            visitor.Visit(tree);
-        }
-        catch (Exception ex)
-        {
-            Trace.WriteLine($"Error: {ex.Message}");
-        }
-        finally
-        {
-            Trace.WriteLine("End of parsing.");
-        }
+        var input = new AntlrInputStream(TextEditor.Text);
+        var lexer = new PythonCommentsLexer(input);
+        var tokens = new CommonTokenStream(lexer);
+        var parser = new PythonCommentsParser(tokens);
+        
+        var tree = parser.file();
+        var walker = new ParseTreeWalker();
+        var listener = new BasicPythonCommentsListener();
+        walker.Walk(listener, tree);
+        
     }
 }
