@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -8,6 +9,9 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using Antlr4.Runtime;
+using Antlr4.Runtime.Tree;
+using CompilersTheoryIDE.Antlr;
 using CompilersTheoryIDE.Model;
 using CompilersTheoryIDE.ViewModel;
 using Microsoft.Win32;
@@ -308,5 +312,28 @@ public partial class MainWindowView
     private void TestExample_Click(object sender, RoutedEventArgs e)
     {
         TextEditor.Text = "Hello # 123''[]\"\"\"\n\nWorld'''\nGenre\n'''error # correct \n #";
+    }
+
+    private void StartAntlr_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            var input = TextEditor.Text;
+            var inputStream = new AntlrInputStream(input);
+            var lexer = new PythonCommentsLexer(inputStream);
+            var tokenStream = new CommonTokenStream(lexer);
+            var parser = new PythonCommentsParser(tokenStream);
+            var tree = parser.file();
+            var visitor = new PythonCommentsBaseVisitor<string>();
+            visitor.Visit(tree);
+        }
+        catch (Exception ex)
+        {
+            Trace.WriteLine($"Error: {ex.Message}");
+        }
+        finally
+        {
+            Trace.WriteLine("End of parsing.");
+        }
     }
 }
