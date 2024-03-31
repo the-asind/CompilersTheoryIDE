@@ -32,7 +32,7 @@
     <v:String x:Key="m_AdjustInputTextSize">Настройка размера шрифта ввода</v:String>
     <v:String x:Key="m_FontSizeChoose">Размер шрифта: </v:String>
 
-    <v:String x:Key="m_Start">Старт</v:String>
+    <v:String x:Key="m_Start">Пуск</v:String>
     <v:String x:Key="m_Help">Помощь</v:String>
     <v:String x:Key="m_GetHelp">Cправка</v:String>
     <v:String x:Key="m_Localization">Локализация</v:String>
