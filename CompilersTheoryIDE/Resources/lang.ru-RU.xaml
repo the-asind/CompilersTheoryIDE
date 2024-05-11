@@ -25,7 +25,7 @@
     <v:String x:Key="m_Grammar">Грамматика</v:String>
     <v:String x:Key="m_GrammarClassification">Классификация грамматики</v:String>
     <v:String x:Key="m_AnalysisMethod">Метод анализа</v:String>
-    <v:String x:Key="m_ErrorDiagnostics">Ошибка диагностики и нейтрализации</v:String>
+    <v:String x:Key="m_ErrorDiagnostics">Диагностика и нейтрализация ошибок</v:String>
     <v:String x:Key="m_TestExample">Пример теста</v:String>
     <v:String x:Key="m_LiteratureList">Список литературы</v:String>
     <v:String x:Key="m_SourceCode">Исходный код</v:String>

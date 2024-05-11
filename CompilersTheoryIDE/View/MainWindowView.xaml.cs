@@ -12,7 +12,6 @@ using System.Windows;
 using System.Windows.Controls;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
-using CompilersTheoryIDE.Antlr;
 using CompilersTheoryIDE.Model;
 using CompilersTheoryIDE.ViewModel;
 using Microsoft.Win32;
@@ -86,7 +85,59 @@ public partial class MainWindowView
     private void TaskStatement_Click(object sender, RoutedEventArgs e)
     {
         // Путь к HTML-файлу
-        string htmlFilePath = @"Resources\help.html";
+        string htmlFilePath = @"Resources\task_statement.html";
+
+        var p = new Process();
+        p.StartInfo = new ProcessStartInfo(htmlFilePath)
+        {
+            UseShellExecute = true
+        };
+        p.Start();
+    }
+    
+    private void Grammar_Click(object sender, RoutedEventArgs e)
+    {
+        // Путь к HTML-файлу
+        string htmlFilePath = @"Resources\grammar.html";
+
+        var p = new Process();
+        p.StartInfo = new ProcessStartInfo(htmlFilePath)
+        {
+            UseShellExecute = true
+        };
+        p.Start();
+    }
+    
+    private void GrammarClassification_Click(object sender, RoutedEventArgs e)
+    {
+        // Путь к HTML-файлу
+        string htmlFilePath = @"Resources\grammar_classification.html";
+
+        var p = new Process();
+        p.StartInfo = new ProcessStartInfo(htmlFilePath)
+        {
+            UseShellExecute = true
+        };
+        p.Start();
+    }
+    
+    private void AnalysisMethod_Click(object sender, RoutedEventArgs e)
+    {
+        // Путь к HTML-файлу
+        string htmlFilePath = @"Resources\analysis_method.html";
+
+        var p = new Process();
+        p.StartInfo = new ProcessStartInfo(htmlFilePath)
+        {
+            UseShellExecute = true
+        };
+        p.Start();
+    }
+    
+    private void LiteratureList_Click(object sender, RoutedEventArgs e)
+    {
+        // Путь к HTML-файлу
+        string htmlFilePath = @"Resources\literature_list.html";
 
         var p = new Process();
         p.StartInfo = new ProcessStartInfo(htmlFilePath)
@@ -317,15 +368,5 @@ public partial class MainWindowView
 
     private void StartAntlr_Click(object sender, RoutedEventArgs e)
     {
-        var input = new AntlrInputStream(TextEditor.Text);
-        var lexer = new PythonCommentsLexer(input);
-        var tokens = new CommonTokenStream(lexer);
-        var parser = new PythonCommentsParser(tokens);
-        
-        var tree = parser.file();
-        var walker = new ParseTreeWalker();
-        var listener = new BasicPythonCommentsListener();
-        walker.Walk(listener, tree);
-        
     }
 }

@@ -14,36 +14,25 @@
 <a name="grammar"></a>
 <h2>Грамматика</h2>
 <pre>
-G [< I >]:
+Определим грамматику комментариев языка Python G[‹Comment›] в нотации Хомского с продукциями P:
+1.	‹Comment› → ‹SingleLineComment› | ‹MultiLineDoubleQuotesComment› | ‹MultiLineSingleQuotesComment›
+2.	‹SingleLineComment› → «#»‹SymbolSequence›‹NewLine›
+3.	‹MultiLineDoubleQuotesComment› → «"""»‹SymbolSequence›«"""»
+4.	‹MultiLineSingleQuotesComment› → «'''»‹SymbolSequence›«'''»
+5.	‹SymbolSequence› → ‹Symbol›{‹Symbol›}
+6.	‹NewLine› → «;»
+• ‹Symbol› → любой другой символ из набора символов языка Python
 
-VT = { '#', '"', ''', newline, symbol}
+Следуя введенному формальному определению грамматики, представим G[‹Comment›] ее составляющими:
+• Z = ‹Comment› 
+• VT = {#, ", ', ;} ∪ набор символов языка Python 
+• VN = {‹Comment›, ‹SingleLineComment›, ‹MultiLineDoubleQuotesComment›, ‹MultiLineSingleQuotesComment›, ‹SymbolSequence›, ‹NewLine›}
 
-VN = { < I >, FOSQ, SOSQ, TOSQ, MLSQC, FSCQ, SSCQ, FODQ, SODQ, TODQ, MLDQC, FDCQ, SDCQ, SHARP, SLC}
-
-P = {
-
-    I → ' FOSQ | " FODQ | # SHARP
-    FOSQ → ' SOSQ
-    SOSQ → ' TOSQ
-    TOSQ → symbol MLSQC
-    MLSQC → symbol MLSQC | ' FSCQ
-    FSCQ → ' SSCQ
-    SSCQ → '
-    FODQ → " SODQ
-    SODQ → " TODQ
-    TODQ → symbol MLDQSC
-    MLDQC -> symbol MLDQC | " FDCQ
-    FDCQ → " SDCQ
-    SDCQ → "
-    SHARP → symbol SLC
-    SLC → symbol SLC | newline
-
-}
   </pre>
 
 <a name="classification"></a>
 <h2>Классификация грамматики</h2>
-<p>Грамматика является полностью автоматной, (по классификации Хомского)</p>
+<p>Грамматика является автоматной, (по классификации Хомского)</p>
 
 <a name="analysis"></a>
 <h2>Метод анализа</h2>

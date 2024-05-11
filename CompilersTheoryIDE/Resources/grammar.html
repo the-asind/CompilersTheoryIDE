@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Тема 51. Грамматика</title>
+</head>
+<body>
+
+<a name="grammar"></a>
+<h1>Грамматика</h1>
+<pre>
+Определим грамматику комментариев языка Python G[‹Comment›] в нотации Хомского с продукциями P:
+1.	‹Comment› → ‹SingleLineComment› | ‹MultiLineDoubleQuotesComment› | ‹MultiLineSingleQuotesComment›
+2.	‹SingleLineComment› → ‘#’‹SymbolSequence›‹NewLine›
+3.	‹MultiLineDoubleQuotesComment› → ‘"""’‹SymbolSequence›‘"""’
+4.	‹MultiLineSingleQuotesComment› → ‘'''’‹SymbolSequence›‘'''’
+5.	‹SymbolSequence› → ‹Symbol›{‹Symbol›}
+6.	‹NewLine› → ‘;’
+• ‹Symbol› → ‘a’ | ‘b’ | ‘c’ | ... | ‘z’ | ‘A’ | ‘B’ | ‘C’ | ... | ‘Z’ | ‘0’ | ... | ‘9’
+
+Следуя введенному формальному определению грамматики, представим G[‹Comment›] ее составляющими:
+• Z = ‹Comment› 
+• VT = {‘#‘, ‘"‘, ‘'’, ‘;‘} ∪ {‘a’…’z’, ‘A’…’Z’, ‘0’...’9’} 
+• VN = {‹Comment›, ‹SingleLineComment›, ‹MultiLineDoubleQuotesComment›, ‹MultiLineSingleQuotesComment›, ‹SymbolSequence›, ‹NewLine›}
+
+  </pre>
+
+</body>
+</html>

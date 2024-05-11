@@ -40,12 +40,12 @@
             </MenuItem>
             <MenuItem Header="{DynamicResource m_Text}">
                 <MenuItem Header="{DynamicResource m_TaskStatement}" Click="TaskStatement_Click" />
-                <MenuItem Header="{DynamicResource m_Grammar}" Click="TaskStatement_Click" />
-                <MenuItem Header="{DynamicResource m_GrammarClassification}" Click="TaskStatement_Click"/>
-                <MenuItem Header="{DynamicResource m_AnalysisMethod}" Click="TaskStatement_Click" />
+                <MenuItem Header="{DynamicResource m_Grammar}" Click="Grammar_Click" />
+                <MenuItem Header="{DynamicResource m_GrammarClassification}" Click="GrammarClassification_Click"/>
+                <MenuItem Header="{DynamicResource m_AnalysisMethod}" Click="AnalysisMethod_Click" />
                 <MenuItem Header="{DynamicResource m_ErrorDiagnostics}" Click="FixErrors_Click" />
                 <MenuItem Header="{DynamicResource m_TestExample}" Click="TestExample_Click"/>
-                <MenuItem Header="{DynamicResource m_LiteratureList}" Click="TaskStatement_Click"/>
+                <MenuItem Header="{DynamicResource m_LiteratureList}" Click="LiteratureList_Click"/>
                 <MenuItem Header="{DynamicResource m_SourceCode}" Click="SourceCode_Click"/>
                 <MenuItem Header="{DynamicResource m_AdjustInputTextSize}">
                     <MenuItem.HeaderTemplate>
@@ -63,8 +63,7 @@
                     </MenuItem.HeaderTemplate>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="{DynamicResource m_Fix}" Click="FixErrors_Click" />
-            <MenuItem Header="{DynamicResource m_Start}" Click="StartAntlr_Click" />
+            <MenuItem Header="{DynamicResource m_Start}" Click="FixErrors_Click" />
             <MenuItem Header="{DynamicResource m_Help}">
                 <MenuItem Header="{DynamicResource m_GetHelp}" Click="GetHelp_Click" />
                 <MenuItem Header="{DynamicResource m_GetAbout}" Click="GetAbout_Click" />

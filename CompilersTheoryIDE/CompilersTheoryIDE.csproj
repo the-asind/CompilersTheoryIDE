@@ -15,13 +15,13 @@
 
     <ItemGroup>
         <PackageReference Include="Antlr4.Runtime.Standard" Version="4.13.1" />
-        <PackageReference Include="AvalonEdit" Version="6.3.0.90"/>
-        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2"/>
-        <PackageReference Include="Material.Icons" Version="2.1.6"/>
-        <PackageReference Include="MaterialDesignExtensions" Version="4.0.0-a02"/>
-        <PackageReference Include="MaterialDesignThemes" Version="4.9.0"/>
-        <PackageReference Include="MaterialDesignColors" Version="2.1.4"/>
-        <PackageReference Include="MaterialDesignThemes.MahApps" Version="0.3.0"/>
+        <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+        <PackageReference Include="Material.Icons" Version="2.1.6" />
+        <PackageReference Include="MaterialDesignExtensions" Version="4.0.0-a02" />
+        <PackageReference Include="MaterialDesignThemes" Version="4.9.0" />
+        <PackageReference Include="MaterialDesignColors" Version="2.1.4" />
+        <PackageReference Include="MaterialDesignThemes.MahApps" Version="0.3.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -43,8 +43,28 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Content Include="Resources\literature_list.html">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
       <None Remove="Resources\help.html" />
+      <Content Include="Resources\analysis_method.html">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Resources\grammar_classification.html">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
       <Content Include="Resources\help.html">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Resources\grammar.html" />
+      <Content Include="Resources\grammar.html">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Resources\task_statement.html" />
+      <Content Include="Resources\task_statement.html">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
     </ItemGroup>
