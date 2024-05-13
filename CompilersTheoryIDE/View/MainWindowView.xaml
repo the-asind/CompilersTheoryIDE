@@ -179,6 +179,9 @@
                             </DataGrid.Columns>
                         </DataGrid>
                     </TabItem>
+                    <TabItem Header="Output">
+                        <TextBlock></TextBlock>
+                    </TabItem>
                 </TabControl>
                 <DockPanel Grid.Row="1" VerticalAlignment="Bottom" Height="20">
                     <Label Content="{DynamicResource m_IDEWasLaunchedSucc}" MinWidth="90"

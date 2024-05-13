@@ -8,19 +8,18 @@
 <a name="grammar"></a>
 <h1>Грамматика</h1>
 <pre>
-Определим грамматику комментариев языка Python G[‹Comment›] в нотации Хомского с продукциями P:
-1.	‹Comment› → ‹SingleLineComment› | ‹MultiLineDoubleQuotesComment› | ‹MultiLineSingleQuotesComment›
-2.	‹SingleLineComment› → ‘#’‹SymbolSequence›‹NewLine›
-3.	‹MultiLineDoubleQuotesComment› → ‘"""’‹SymbolSequence›‘"""’
-4.	‹MultiLineSingleQuotesComment› → ‘'''’‹SymbolSequence›‘'''’
-5.	‹SymbolSequence› → ‹Symbol›{‹Symbol›}
-6.	‹NewLine› → ‘;’
+Определим грамматику комментариев языка Python G[‹C›] в нотации Хомского с продукциями P:
+1.  ‹C› → ‘#’‹SymbolSequenceLineComment› | ‘"""’‹SymbolSequenceDoubleQuotes› | ‘'''’‹SymbolSequenceSingleQuotes›
+2.  ‹SymbolSequenceLineComment› → ‹Symbol›‹SymbolSequenceLineComment› | ‘;’
+3.  ‹SymbolSequenceDoubleQuotes› → ‹Symbol›‹SymbolSequenceDoubleQuotes› | ‘"""’
+4.  ‹SymbolSequenceSingleQuotes› → ‹Symbol›‹SymbolSequenceSingleQuotes› | ‘'''’
 • ‹Symbol› → ‘a’ | ‘b’ | ‘c’ | ... | ‘z’ | ‘A’ | ‘B’ | ‘C’ | ... | ‘Z’ | ‘0’ | ... | ‘9’
 
-Следуя введенному формальному определению грамматики, представим G[‹Comment›] ее составляющими:
-• Z = ‹Comment› 
-• VT = {‘#‘, ‘"‘, ‘'’, ‘;‘} ∪ {‘a’…’z’, ‘A’…’Z’, ‘0’...’9’} 
-• VN = {‹Comment›, ‹SingleLineComment›, ‹MultiLineDoubleQuotesComment›, ‹MultiLineSingleQuotesComment›, ‹SymbolSequence›, ‹NewLine›}
+Следуя введенному формальному определению грамматики, представим G[‹C›] ее составляющими:
+• Z = ‹C› 
+• VT = {‘#’, ‘"""’, ‘'''’, ‘;’} ∪ {‘a’…‘z’, ‘A’…‘Z’, ‘0’…‘9’} 
+• VN = {‹C›, ‹SingleLineComment›, ‹MultiLineDoubleQuotesComment›, ‹MultiLineSingleQuotesComment›, 
+    ‹SymbolSequenceLineComment›, ‹SymbolSequenceLineComment›, ‹SymbolSequenceSingleQuotes›}
 
   </pre>
 
