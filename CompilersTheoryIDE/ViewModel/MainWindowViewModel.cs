@@ -155,4 +155,32 @@ public class MainWindowViewModel : INotifyPropertyChanged
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
+    // private RelayCommand _calculateExprCommand;
+    // public RelayCommand CalculateExprCommand
+    // {
+    //     get => _calculateExprCommand ??= new RelayCommand(CalculateExpr);
+    // }
+    //
+    // public void CalculateExpr(object obj)
+    // {
+    //     try
+    //     {
+    //         string str = _fileContent.Replace("\n", "").Replace("\r", "").Replace(" ", "");
+    //         PolishNotationCalculator polishNotationCalculator = new();
+    //         polishNotationCalculator.Calculate(str);
+    //         if (polishNotationCalculator.Errors.Count > 0)
+    //         {
+    //             VMText = string.Join("\n", polishNotationCalculator.Errors);
+    //
+    //         }
+    //         else
+    //         {
+    //             VMText = $"Исходное арифметическое выражение:\n{str}\n\nВыражение в ПОЛИЗ:\n{polishNotationCalculator.Output}\n\nОтвет: {polishNotationCalculator.Result}.";
+    //         }
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         VMText = ex.Message;
+    //     }
+    // }
 }

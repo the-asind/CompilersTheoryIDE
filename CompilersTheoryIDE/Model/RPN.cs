@@ -1,17 +1,18 @@
-﻿namespace CompilersTheoryIDE.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
+
+namespace CompilersTheoryIDE.Model;
 
 public class PolishNotationCalculator
 {
     public string Output = "";
     public double Result;
-    public List<string> Errors = new List<string>();
+    public List<string> Errors = new();
 
     public double Calculate(string input)
     {
         Output = GetExpression(input);
-        if (Errors.Count == 0) 
+        if (Errors.Count == 0)
             Result = Counting(Output);
         else
             Result = 0;
@@ -23,7 +24,7 @@ public class PolishNotationCalculator
         var output = string.Empty;
         var operatorStack = new Stack<char>();
 
-        for (int i = 0; i < input.Length; i++)
+        for (var i = 0; i < input.Length; i++)
         {
             if (IsSeparator(input[i]))
                 continue;
@@ -43,56 +44,53 @@ public class PolishNotationCalculator
             }
 
             if (IsOperator(input[i]))
-            {
-                if (input[i] == '(')
-                    operatorStack.Push(input[i]);
-                else if (input[i] == ')')
+                switch (input[i])
                 {
-                    bool foundOpeningBracket = false;
-                    while (operatorStack.Count > 0 && operatorStack.Peek() != '(')
+                    case '(':
+                        operatorStack.Push(input[i]);
+                        break;
+                    case ')':
                     {
-                        output += operatorStack.Pop() + " ";
-                    }
+                        var foundOpeningBracket = false;
+                        while (operatorStack.Count > 0 && operatorStack.Peek() != '(')
+                            output += operatorStack.Pop() + " ";
 
-                    if (operatorStack.Count > 0 && operatorStack.Peek() == '(')
-                    {
-                        operatorStack.Pop();
-                        foundOpeningBracket = true;
-                    }
+                        if (operatorStack.Count > 0 && operatorStack.Peek() == '(')
+                        {
+                            operatorStack.Pop();
+                            foundOpeningBracket = true;
+                        }
 
-                    if (!foundOpeningBracket)
+                        if (!foundOpeningBracket)
+                            Errors.Add("Ошибка: Отсутствует открывающая скобка для закрывающей скобки");
+
+                        break;
+                    }
+                    default:
                     {
-                        Errors.Add("Ошибка: Отсутствует открывающая скобка для закрывающей скобки");
-                        //return output; // Не возвращаемся сразу после обнаружения ошибки
+                        if (operatorStack.Count > 0)
+                            if (GetPriority(input[i]) <= GetPriority(operatorStack.Peek()))
+                                output += operatorStack.Pop() + " ";
+
+                        operatorStack.Push(char.Parse(input[i].ToString()));
+                        break;
                     }
                 }
-                else
-                {
-                    if (operatorStack.Count > 0)
-                        if (GetPriority(input[i]) <= GetPriority(operatorStack.Peek()))
-                            output += operatorStack.Pop().ToString() + " ";
-
-                    operatorStack.Push(char.Parse(input[i].ToString()));
-                }
-            }
 
             if (IsUnexpectedSymbol(input[i]))
-            {
                 Errors.Add("Ошибка: Непредвиденный символ " + input[i]);
-                //return output; // Не возвращаемся сразу после обнаружения ошибки
-            }
         }
 
         while (operatorStack.Count > 0)
-        {
             if (operatorStack.Peek() == '(')
             {
-                Errors.Add("Ошибка: Отсутствует закрывающая скобка для открывающей скобки");
+                Errors.Add("Ошибка: Отсутствует закрывающая скобка");
                 operatorStack.Pop();
             }
             else
+            {
                 output += operatorStack.Pop() + " ";
-        }
+            }
 
         return output;
     }
@@ -102,8 +100,7 @@ public class PolishNotationCalculator
         double result = 0;
         var temp = new Stack<double>();
 
-        for (int i = 0; i < input.Length; i++)
-        {
+        for (var i = 0; i < input.Length; i++)
             if (char.IsDigit(input[i]))
             {
                 var a = string.Empty;
@@ -114,16 +111,14 @@ public class PolishNotationCalculator
                     i++;
                     if (i == input.Length) break;
                 }
+
                 temp.Push(double.Parse(a));
                 i--;
             }
             else if (IsOperator(input[i]))
             {
                 if (temp.Count < 2)
-                {
                     Errors.Add("Ошибка: Недостаточно операндов для данного оператора");
-                    //return 0; // Не возвращаемся сразу после обнаружения ошибки
-                }
 
                 var a = temp.Pop();
                 var b = temp.Pop();
@@ -139,7 +134,7 @@ public class PolishNotationCalculator
                 };
                 temp.Push(result);
             }
-        }
+
         return temp.Peek();
     }
 
@@ -179,7 +174,6 @@ public class PolishNotationCalculator
         var tokens = rpnExpression.Split(' ');
 
         foreach (var token in tokens)
-        {
             if (IsOperator(token[0]))
             {
                 if (stack.Count < 2)
@@ -197,15 +191,10 @@ public class PolishNotationCalculator
             {
                 stack.Push(token);
             }
-        }
 
-        if (stack.Count != 1)
-        {
-            Errors.Add("Ошибка: Неверное количество операндов в обратной польской нотации");
-            return "";
-        }
+        if (stack.Count == 1) return stack.Pop();
+        Errors.Add("Ошибка: Неверное количество операндов в обратной польской нотации");
+        return stack.ToString();
 
-        return stack.Pop();
     }
-
 }

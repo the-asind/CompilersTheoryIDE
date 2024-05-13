@@ -214,6 +214,42 @@ public partial class MainWindowView
         // Parse the tokens and update the ParserGrid
         _viewModel.ParseTokens(tokens);
     }
+
+    private void CalculateExpr(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            var str = TextEditor.Text.Replace("\n", "").Replace("\r", "").Replace(" ", "");
+            PolishNotationCalculator polishNotationCalculator = new();
+            polishNotationCalculator.Calculate(str);
+            outputTextBlock.Text = polishNotationCalculator.Errors.Count > 0
+                ? string.Join("\n", polishNotationCalculator.Errors)
+                : $"Выражение мат.языком:\n{str}\n\nВыражение в ПОЛИЗ:\n{polishNotationCalculator.Output}\n\nОтвет: {polishNotationCalculator.Result}.";
+        }
+        catch (Exception ex)
+        {
+            outputTextBlock.Text = ex.Message;
+        }
+    }
+
+    private void ReverseToPolishExpr(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            var str = TextEditor.Text;
+            PolishNotationCalculator polishNotationCalculator = new();
+            polishNotationCalculator.GetNormalExpression(str);
+            outputTextBlock.Text =
+                polishNotationCalculator.Errors.Count > 0
+                    ? string.Join("\n", polishNotationCalculator.Errors)
+                    : $"Выражение в ПОЛИЗ:\n{str}\n\nВыражение мат. языком:\n{polishNotationCalculator.Output}\n\nОтвет: {polishNotationCalculator.Result}.";
+            
+        }
+        catch (Exception ex)
+        {
+            outputTextBlock.Text = ex.Message;
+        }
+    }
     
     private bool SaveFileCheckIsInterrupted()
     {
