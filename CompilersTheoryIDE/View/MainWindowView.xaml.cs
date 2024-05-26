@@ -231,6 +231,21 @@ public partial class MainWindowView
             outputTextBlock.Text = ex.Message;
         }
     }
+    
+    private void FindRegex(object sender, RoutedEventArgs e)
+    {
+        var text = TextEditor.Text;
+        try
+        {
+            var finder = new RegexFinder();
+            var result = RegexFinder.FindAllMatches(text);
+            outputTextBlock.Text = result;
+        }
+        catch (Exception ex)
+        {
+            outputTextBlock.Text = ex.Message;
+        }
+    }
 
     private void ReverseToPolishExpr(object sender, RoutedEventArgs e)
     {

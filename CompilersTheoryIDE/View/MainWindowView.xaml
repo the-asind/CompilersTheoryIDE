@@ -69,7 +69,8 @@
                 <MenuItem Header="{DynamicResource m_GetAbout}" Click="GetAbout_Click" />
             </MenuItem>
             <MenuItem x:Name="MenuLanguage" Header="{DynamicResource m_Localization}" />
-            <Button Margin="2" Padding="5" Click="CalculateExpr" Background="WhiteSmoke" Foreground="Black" Content="Мат.выражение в ПОЛИЗ"/>
+            <Button Padding="5" Click="CalculateExpr" Background="WhiteSmoke" Foreground="Black" Content="в ПОЛИЗ"/>
+            <Button  Padding="5" Click="FindRegex" Background="WhiteSmoke" Foreground="Black" Content="Найти РВ"/>
         </Menu>
         <ToolBar DockPanel.Dock="Top">
             <Button Content="{DynamicResource m_Create}" Click="CreateNewFile_Click" />
@@ -181,7 +182,7 @@
                         </DataGrid>
                     </TabItem>
                     <TabItem Header="Output">
-                        <TextBlock x:Name="outputTextBlock" Margin="5" TextWrapping="WrapWithOverflow" Background="White" FontSize="16" Padding="0" Text="Ошибка: деление на ноль запрещено"/>
+                        <TextBlock x:Name="outputTextBlock" Margin="5" TextWrapping="WrapWithOverflow" Background="White" FontSize="16" Padding="0" Text="Нажмите на красную кнопку сверху, чтобы сделать появился вывод."/>
                     </TabItem>
                 </TabControl>
                 <DockPanel Grid.Row="1" VerticalAlignment="Bottom" Height="20">
