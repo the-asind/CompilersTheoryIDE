@@ -222,6 +222,7 @@ public partial class MainWindowView
             var str = TextEditor.Text.Replace("\n", "").Replace("\r", "").Replace(" ", "");
             PolishNotationCalculator polishNotationCalculator = new();
             polishNotationCalculator.Calculate(str);
+            treeViewFormula.Visibility = Visibility.Collapsed;
             outputTextBlock.Text = polishNotationCalculator.Errors.Count > 0
                 ? string.Join("\n", polishNotationCalculator.Errors)
                 : $"Выражение мат.языком:\n{str}\n\nВыражение в ПОЛИЗ:\n{polishNotationCalculator.Output}\n\nОтвет: {polishNotationCalculator.Result}.";
@@ -239,6 +240,7 @@ public partial class MainWindowView
         {
             var finder = new RegexFinder();
             var result = RegexFinder.FindAllMatches(text);
+            treeViewFormula.Visibility = Visibility.Collapsed;
             outputTextBlock.Text = result;
         }
         catch (Exception ex)
@@ -246,7 +248,63 @@ public partial class MainWindowView
             outputTextBlock.Text = ex.Message;
         }
     }
+    
+    private void RecursiveResult(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            var test = new RecursiveDescentParser();
+            treeViewFormula.Items.Clear();
+            var output = test.Parse(TextEditor.Text);
+            outputTextBlock.Text = output;
+            ParseOutputFormula(output);
+            treeViewFormula.Visibility = Visibility.Visible;
+        }
+        catch (Exception er)
+        {
+            outputTextBlock.Text = er.Message;
+        }
+    }
 
+    private void ParseOutputFormula(string parsedFormula)
+    {
+        var root = new TreeViewItem { Header = "FORMULA" };
+        
+        treeViewFormula.Items.Add(root);
+            
+        int position = 0;
+        ParseNode(root, parsedFormula, ref position);
+    }
+
+    private void ParseNode(TreeViewItem parent, string parsedFormula, ref int position)
+    {
+        while (position < parsedFormula.Length)
+        {
+            if (parsedFormula[position] == '-')
+            {
+                position++;
+                var nodeType = "";
+                while (position < parsedFormula.Length && parsedFormula[position] != '-')
+                {
+                    nodeType += parsedFormula[position];
+                    position++;
+                }
+                    
+                var newItem = new TreeViewItem { Header = nodeType };
+                parent.Items.Add(newItem);
+                    
+                if (nodeType == "ЧИСЛО" || nodeType == "ЦИФРА" || nodeType == "ЗНАК")
+                {
+                    ParseNode(newItem, parsedFormula, ref position);
+                }
+            }
+            else
+            {
+                position++;
+            }
+        }
+    }
+    
     private void ReverseToPolishExpr(object sender, RoutedEventArgs e)
     {
         try
